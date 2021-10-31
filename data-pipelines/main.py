@@ -1,10 +1,4 @@
-from extract.extract_crime import extract_crime
-from extract.extract_listing import extract_listing
-from transform.transform_service import create_latlon_cols
+from pipelines.insights_from_listing import insights_from_listing
+from pipelines.insights_from_request import insights_from_request
 
-crime_df = extract_crime()
-listing_df = extract_listing()
-
-crime_df = create_latlon_cols(crime_df)
-
-print(crime_df.head())
+print(insights_from_request({'name': 'Test Crib', 'lat': -8965492.68, 'lon': 5383765.00}))

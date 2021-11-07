@@ -1,3 +1,3 @@
-﻿id,name,latitude,longtitude,data
-0,Waterloo,43.4565521,-80.4638552,"{bed: 100, bath: 50}"
-1,Laurier,43.4565521,-80.4638552,"{bed: 200, bath: 150}"
+﻿name,latitude,longtitude,data
+Waterloo,43.4565521,-80.4638552,"{bed: 100, bath: 50}"
+Laurier,43.4565521,-80.4638552,"{bed: 200, bath: 150}"

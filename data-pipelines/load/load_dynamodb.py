@@ -1,3 +1,4 @@
+import json
 import os
 import boto3 as aws
 import uuid
@@ -7,6 +8,12 @@ from geojson import dumps
 LISTINGS_TABLE = "listings"
 MAX_REQS = 10
 GEOMETRY_COLS = ['Latitude', 'Longitude', 'geometry', 'buffer']
+DB_FIELDS = ['id', 'name', 'crime_geodata_string']
+DB_TYPES = {
+    'id': "S",
+    'name': 'S',
+    'crime_geodata_string': 'S'
+}
 
 def test_db():
     db = DB().cur
@@ -20,9 +27,18 @@ class DB:
             self.cur = aws.client('dynamodb')
 
 
+def _create_aws_item(data_json):
+    aws_item = {}
+    for field in DB_FIELDS:
+        aws_item[field] = {
+            DB_TYPES[field]: data_json[field]['0']
+        }
+    return aws_item
+
+
 def _create_put_req(data_json):
     return {'PutRequest': {
-        'Item': data_json
+        'Item': _create_aws_item(data_json)
     }}
 
 
@@ -44,4 +60,4 @@ def transform_df_for_dynamodb(gdf):
     gdf['id'] = [str(uuid.uuid4()) for _ in range(len(gdf.index))]
     gdf['crime_geodata_string'] = gdf['crime_geodata'].apply(dumps)
     df = pd.DataFrame(gdf.drop(columns=GEOMETRY_COLS))
-    return df.to_json()
+    return json.loads(df.to_json())

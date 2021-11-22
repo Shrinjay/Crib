@@ -8,11 +8,11 @@ from geojson import dumps
 LISTINGS_TABLE = "listings"
 MAX_REQS = 10
 GEOMETRY_COLS = ['Latitude', 'Longitude', 'geometry', 'buffer']
-DB_FIELDS = ['id', 'name', 'crime_geodata_string']
+DB_FIELDS = ['id', 'name', 'crime_geodata']
 DB_TYPES = {
     'id': "S",
     'name': 'S',
-    'crime_geodata_string': 'S'
+    'crime_geodata': 'S'
 }
 
 def test_db():
@@ -58,6 +58,5 @@ def load_dynamodb(data_jsons):
 
 def transform_df_for_dynamodb(gdf):
     gdf['id'] = [str(uuid.uuid4()) for _ in range(len(gdf.index))]
-    gdf['crime_geodata_string'] = gdf['crime_geodata'].apply(dumps)
     df = pd.DataFrame(gdf.drop(columns=GEOMETRY_COLS))
     return json.loads(df.to_json())

@@ -1,6 +1,6 @@
 from pipelines.insights_from_listing import insights_from_listing
 from pipelines.insights_from_request import insights_from_request
-from load.load_dynamodb import load_dynamodb
+from load.load_dynamodb import load_to_aws
 from dotenv import load_dotenv
 import flask
 
@@ -12,10 +12,9 @@ app = flask.Flask(__name__)
 def insights_from_csv():
     try:
         insights_json = insights_from_listing()
-        load_fail = load_dynamodb(insights_json)
+        load_fail = load_to_aws(insights_json)
         return {
-            'status': not load_fail,
-            'data': insights_json
+            'status': not load_fail
         }
 
     except:
@@ -26,7 +25,7 @@ def insights_from_csv():
 
 @app.route("/insights_from_request")
 def insights_from_req():
-    try:
+    # try:
         if all(map(lambda f: f in flask.request.args.keys(), ["name", "lon", "lat"])):
             name = flask.request.args.get("name")
             lon = float(flask.request.args.get("lon"))
@@ -36,10 +35,9 @@ def insights_from_req():
                 'lat': lat,
                 'lon': lon
             })
-            load_fail = load_dynamodb(insights_json)
+            load_fail = load_to_aws(insights_json)
             return {
-                'status': not load_fail,
-                'data': insights_json
+                'status': not load_fail
             }
         else:
             return {
@@ -47,10 +45,10 @@ def insights_from_req():
                 'data': "MISSING PARAMS"
             }
 
-    except:
-        return {
-            'status': False
-        }
+    # except:
+    #     return {
+    #         'status': False
+    #     }
 
 
 app.run()

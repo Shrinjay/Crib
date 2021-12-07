@@ -22,7 +22,7 @@ def create_crime_association(crime_df, listing_df):
 def _create_geocrime_row(listing_row, crime_df):
     near_crimes_geodf = crime_df.loc[crime_df.geometry.within(listing_row.buffer)]
     near_crimes_geodf = near_crimes_geodf[["occurrencefileno", "ReportedDateandTime", "FinalCallTypeDescription", "geometry"]]
-    crime_geojson = near_crimes_geodf.head(20).to_json()
+    crime_geojson = near_crimes_geodf.to_json().encode('UTF-8')
     return crime_geojson
 
 

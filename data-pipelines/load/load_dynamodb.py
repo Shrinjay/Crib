@@ -102,7 +102,7 @@ def load_dynamodb(data_jsons, index_len):
 
 
 def transform_df_for_dynamodb(gdf):
-    gdf['id'] = [str(uuid.uuid4()) for _ in range(len(gdf.index))]
+    gdf['id'] = ['waterloo' for _ in range(len(gdf.index))]
     gdf['Latitude'] = gdf.apply(lambda s: str(s['Latitude']), axis=1)
     gdf['Longitude'] = gdf.apply(lambda s: str(s['Longitude']), axis=1)
     df = pd.DataFrame(gdf)

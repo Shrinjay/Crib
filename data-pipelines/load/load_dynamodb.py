@@ -4,6 +4,7 @@ import boto3 as aws
 import uuid
 import pandas as pd
 
+WATERLOO_ID = "c7fe6867-d74a-4558-a3df-68593cbb4aff"
 S3_BUCKET = "crime-geodata"
 LISTINGS_TABLE = "listings"
 MAX_REQS = 10
@@ -102,7 +103,7 @@ def load_dynamodb(data_jsons, index_len):
 
 
 def transform_df_for_dynamodb(gdf):
-    gdf['id'] = [str(uuid.uuid4()) for _ in range(len(gdf.index))]
+    gdf['id'] = [WATERLOO_ID for _ in range(len(gdf.index))]
     gdf['Latitude'] = gdf.apply(lambda s: str(s['Latitude']), axis=1)
     gdf['Longitude'] = gdf.apply(lambda s: str(s['Longitude']), axis=1)
     df = pd.DataFrame(gdf)

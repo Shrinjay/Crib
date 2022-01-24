@@ -1,0 +1,4 @@
+<mgl-popup *ngIf="point" [feature]="point">
+    <p *ngIf="point?.properties">Crime Type: {{point.properties?.['FinalCallTypeDescription']}}</p>
+    <p *ngIf="point?.properties">Date and Time: {{point.properties?.['ReportedDateandTime']}}</p>
+</mgl-popup>

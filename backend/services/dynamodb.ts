@@ -1,6 +1,6 @@
 import * as dynamodb from '@aws-sdk/client-dynamodb'
 import { KeysAndAttributes } from '@aws-sdk/client-dynamodb';
-import {Listing, ListingQuery, FieldAttributes} from '../types/db_types';
+import { Listing, ListingResponse, ListingQuery, FieldAttributes } from '../types/db_types';
 
 const TABLE_NAME: string = "listings";
 const FIELD_TYPES: FieldAttributes = {
@@ -12,22 +12,26 @@ const FIELD_TYPES: FieldAttributes = {
 }
 const FIELDS = ["id", "name", "Longitude", "Latitude", "crime_geodata_id"]
 
-const dbContext: dynamodb.DynamoDB = new dynamodb.DynamoDB({"region": "us-west-2"});
+const dbContext: dynamodb.DynamoDB = new dynamodb.DynamoDB({ "region": "us-west-2" });
 
-export async function getListings(query: ListingQuery): Promise<Listing[]> {
-    const params: dynamodb.BatchGetItemCommandInput = buildListingRequestItem(query);
-    
-    const res: dynamodb.BatchGetItemCommandOutput = await dbContext.batchGetItem(params)
+export async function getListings(): Promise<{ [id: string]: Listing } | null> {
 
+    const res: dynamodb.ScanCommandOutput = await dbContext.scan({ TableName: "listings" })
     return buildListingItems(res);
 }
 
-function buildListingItems(response: dynamodb.BatchGetItemCommandOutput): Listing[] {
-    return response?.Responses?.[TABLE_NAME]?.map(_buildListingItem) ?? [];
+function buildListingItems(response: dynamodb.ScanCommandOutput): { [id: string]: Listing } | null {
+    const listingMap: { [id: string]: Listing } = {}
+    const listingItems: ListingResponse[] | null = response?.Items?.map(_buildListingItem) ?? null;
+
+    listingItems
+        ?.forEach(listingResponse => listingMap[listingResponse.id] = _buildListingVm(listingResponse));
+
+    return listingMap;
 }
 
-function _buildListingItem(resItem: any): Listing {
-    let res: Listing = {
+function _buildListingItem(resItem: any): ListingResponse {
+    let res: ListingResponse = {
         id: "",
         name: "",
         Latitude: "",
@@ -40,8 +44,13 @@ function _buildListingItem(resItem: any): Listing {
     return res;
 }
 
-function buildListingRequestItem(query: ListingQuery): dynamodb.BatchGetItemCommandInput  {
-    
+function _buildListingVm(listing: ListingResponse): Listing {
+    const { id, ...listingVm } = listing;
+    return listingVm;
+}
+
+function buildListingRequestItem(query: ListingQuery): dynamodb.BatchGetItemCommandInput {
+
     if (query === null) return {
         RequestItems: {
             [TABLE_NAME]: {
@@ -54,10 +63,10 @@ function buildListingRequestItem(query: ListingQuery): dynamodb.BatchGetItemComm
         RequestItems: {
             [TABLE_NAME]: {
                 Keys: [
-                    {id: {[FIELD_TYPES.id]: query.id}}
+                    { id: { [FIELD_TYPES.id]: query.id } }
                 ]
             } as unknown as KeysAndAttributes
         },
-        
+
     }
 }

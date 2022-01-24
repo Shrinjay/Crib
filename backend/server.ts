@@ -1,19 +1,19 @@
-import {getListings} from './services/dynamodb';
-import {getListingJSON} from './services/s3';
-import {ListingQuery} from './types/db_types';
+import { getListings } from './services/dynamodb';
+import { getListingJSON } from './services/s3';
+import { ListingQuery } from './types/db_types';
 require('dotenv').config();
+const cors = require('cors');
 
-const PORT = process.env.PORT;
+const PORT = 8080;
 const WATERLOO_PARTITION_KEY = "c7fe6867-d74a-4558-a3df-68593cbb4aff";
 
 const app = require("express")();
 
-app.get('/listings', (req: any, res: any) => {
-    const query: ListingQuery = {
-        id: WATERLOO_PARTITION_KEY
-    }
+app.use(cors());
 
-    getListings(query).then(queryResp => res.send(queryResp));
+app.get('/listings', (req: any, res: any) => {
+
+    getListings().then(queryResp => res.send(queryResp));
 })
 
 app.get('/crime_data/:id', (req: any, res: any) => {

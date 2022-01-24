@@ -17,9 +17,10 @@ def insights_from_csv():
             'status': not load_fail
         }
 
-    except:
+    except Exception as e:
+        print(e)
         return {
-            'status': False
+            'status': str(e)
         }
 
 

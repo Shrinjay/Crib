@@ -1,4 +1,4 @@
-import {ScalarAttributeType} from '@aws-sdk/client-dynamodb'
+import { ScalarAttributeType } from '@aws-sdk/client-dynamodb'
 
 export type FieldAttributes = {
     [id: string]: ScalarAttributeType,
@@ -12,10 +12,12 @@ export type ListingQuery = {
     id: string
 }
 
-export type Listing = {
+export type ListingResponse = {
     id: string,
     name: string,
     Longitude: string,
     Latitude: string,
     crime_geodata_id: string
 }
+
+export type Listing = Omit<ListingResponse, "id">

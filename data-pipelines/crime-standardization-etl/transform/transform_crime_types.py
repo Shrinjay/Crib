@@ -1,5 +1,5 @@
-from common.transformer_unit import TransformUnit
-from common.crime_types import Crime
+from transformer_unit import TransformUnit
+from crime_types import Crime
 import pandas as pd
 import numpy as np
 

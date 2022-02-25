@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  base_url: "",
-  mapbox_key: ""
+  base_url: "http://localhost:8080",
+  mapbox_key: "pk.eyJ1Ijoic2hyaW5qYXkiLCJhIjoiY2t5Y2s0eTdyMHBtdDJ2cG1kcjNlNXA5ZSJ9.xEJZKgFcnLfhMIHinIIWWw"
 };
 
 /*

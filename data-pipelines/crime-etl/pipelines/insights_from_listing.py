@@ -1,6 +1,6 @@
 from extract.extract_crime import extract_crime
 from extract.extract_listing import extract_listing
-from pipelines.base_pipelines import base_insights, clean_wrps_crime
+from pipelines.base_pipelines import base_insights
 from utils.geo_service import create_geo_frame
 
 def insights_from_listing():

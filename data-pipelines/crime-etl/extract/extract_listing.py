@@ -2,7 +2,7 @@ import pandas as pd
 
 
 def extract_listing():
-    return pd.read_csv('./data-pipelines/data/testlisting.csv')
+    return pd.read_csv('./data/testlisting.csv')
 
 
 def extract_listing_from_request(request):

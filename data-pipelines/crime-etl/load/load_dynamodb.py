@@ -5,7 +5,7 @@ import uuid
 import pandas as pd
 
 WATERLOO_ID = "c7fe6867-d74a-4558-a3df-68593cbb4aff"
-S3_BUCKET = "crime-geodata"
+S3_BUCKET_CRIME_GEODATA = "crime-geodata"
 LISTINGS_TABLE = "listings"
 MAX_REQS = 10
 GEOMETRY_COLS = ['geometry']
@@ -25,18 +25,6 @@ class DB:
             self.cur = aws.client('dynamodb', endpoint_url=os.getenv("local_db_endpoint"))
         else:
             self.cur = aws.client('dynamodb')
-
-
-class S3Manager:
-    def __init__(self, bucket):
-        self.client = aws.client('s3')
-        self.bucket = bucket
-
-    def put(self, key, data):
-        self.client.put_object(Bucket=self.bucket, Key=key, Body=data)
-
-
-S3 = S3Manager(S3_BUCKET)
 
 
 def _create_aws_item(data_json, index):
@@ -69,8 +57,14 @@ def build_s3_gdf(gdf):
     return gdf.drop(columns=GEOMETRY_COLS)
 
 
-def build_s3_requests(gdf_s3):
+def build_s3_requests_crime_geodata(gdf_s3):
     byte_jsons = list(map(bytes, gdf_s3['crime_geodata']))
+    s3_requests = dict(zip(list(gdf_s3['crime_geodata_id']), byte_jsons))
+    return s3_requests
+
+
+def build_s3_requests_crime_metrics(gdf_s3):
+    byte_jsons = list(map(bytes, gdf_s3['crime_metrics']))
     s3_requests = dict(zip(list(gdf_s3['crime_geodata_id']), byte_jsons))
     return s3_requests
 
@@ -80,16 +74,20 @@ def load_to_aws(gdf):
     gdf_db = build_db_gdf(gdf)
     gdf_s3 = build_s3_gdf(gdf)
 
-    s3_requests = build_s3_requests(gdf_s3)
+    s3_requests_crime_geodata = build_s3_requests_crime_geodata(gdf_s3)
+    s3_requests_crime_metrics = build_s3_requests_crime_metrics(gdf_s3)
     db_requests = transform_df_for_dynamodb(gdf_db)
 
-    for k, v in s3_requests.items():
-        load_s3(f"{k}.json", v)
+    for k, v in s3_requests_crime_geodata.items():
+        load_s3("crime-geodata", f"{k}.json", v)
+    for k, v in s3_requests_crime_metrics.items():
+        load_s3("crime-metrics", f"{k}.json", v)
     load_dynamodb(db_requests, len(gdf.index))
 
 
-def load_s3(key, json_file):
-    S3.put(key=key, data=json_file)
+def load_s3(bucket, key, json_file):
+    s3_client = aws.client('s3')
+    s3_client.put_object(Bucket=bucket, Key=key, Body=json_file)
 
 
 def load_dynamodb(data_jsons, index_len):

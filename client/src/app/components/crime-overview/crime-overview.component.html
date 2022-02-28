@@ -1,0 +1,14 @@
+<div class="container-flex" style="height: 90vh; overflow-x: hidden;">
+    <div class="row">
+        <div class="col-8">
+            <app-map [center]="center"></app-map>
+        </div>
+        <div class="col-4">
+            <div style="overflow-y: hidden;">
+                <div>
+                    <app-crime-card [crimeMetrics]="crimeMetrics"></app-crime-card>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

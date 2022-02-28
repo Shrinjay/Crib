@@ -1,0 +1,10 @@
+<div *ngFor="let metricObj of viewMetrics" class="card">
+    <div class="card-body">
+        <div class="card-title">
+            <b>{{metricObj['key']}}</b>
+        </div>
+        <div class="card-subtitle mb-2 text-muted">
+            {{metricObj['value']}}
+        </div>
+    </div>
+</div>

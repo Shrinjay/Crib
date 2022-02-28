@@ -1,6 +1,5 @@
-<h1>Map here</h1>
-<div>
-    <mgl-map [style]="'mapbox://styles/mapbox/streets-v11'" [zoom]="[15]" [center]="[-80.5339761, 43.4728608]">
+<div class="col-9">
+    <mgl-map stlye="height: 100%" [style]="'mapbox://styles/mapbox/streets-v11'" [zoom]="[15]" [center]="center">
         <mgl-image id="marker" url="https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png"></mgl-image>
         <mgl-geojson-source id="oneline" [data]="geometry">
         </mgl-geojson-source>

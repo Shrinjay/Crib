@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Listing } from './types/api_types';
+import { CrimeMetrics, Listing } from './types/api_types';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { Observable } from 'rxjs';
@@ -18,6 +18,10 @@ export class ApiService {
   }
 
   getCrimeGeoData(id: string): Observable<FeatureCollection<Point, GeoJsonProperties>> {
-    return this.http.get<FeatureCollection<Point, GeoJsonProperties>>(`${this.base_url}/crime_data/${id}`);
+    return this.http.get<FeatureCollection<Point, GeoJsonProperties>>(`${this.base_url}/crime_data/${id}.json`);
+  }
+
+  getCrimeMetrics(id: string): Observable<CrimeMetrics> {
+    return this.http.get<CrimeMetrics>(`${this.base_url}/crime_metrics/${id}.json`)
   }
 }

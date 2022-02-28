@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Feature, FeatureCollection, GeoJsonProperties, Point } from 'geojson';
-import { MapboxGeoJSONFeature, MapLayerMouseEvent, MapMouseEvent } from 'mapbox-gl';
+import { LngLatLike, MapboxGeoJSONFeature, MapLayerMouseEvent, MapMouseEvent } from 'mapbox-gl';
 import { StateService } from 'src/app/services/state/state.service';
 import { ApiService } from '../../../api.service';
 
@@ -10,13 +10,14 @@ import { ApiService } from '../../../api.service';
   styleUrls: ['./map.component.css']
 })
 export class MapComponent {
+  @Input() center: LngLatLike | undefined;
 
   title = 'client';
   selectedPoint: Feature<Point, GeoJsonProperties> | undefined = undefined;
   geometry: FeatureCollection<Point, GeoJsonProperties> = {} as FeatureCollection<Point, GeoJsonProperties>;
 
   constructor(private api: ApiService, private stateService: StateService) {
-    this.stateService.SelectedListingCrimeGeodataId.subscribe(id => this.getCrimeData(id))
+    this.stateService.SelectedListing.subscribe(listing => this.getCrimeData(listing.crime_geodata_id))
   }
 
   getCrimeData(id: string) {

@@ -31,8 +31,7 @@ export class ListingsComponent implements OnInit {
 
   onClick(id: string): void {
     if (this.listings) {
-      const crime_id: string = `${this.listings[id].crime_geodata_id}.json`
-      this.stateService.SelectedListingCrimeGeodataId.next(crime_id);
+      this.stateService.SelectedListing.next(this.listings[id]);
     }
   }
 

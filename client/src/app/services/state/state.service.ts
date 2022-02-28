@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { Listing } from 'src/app/types/api_types';
 
 @Injectable({
   providedIn: 'root'
@@ -8,5 +9,5 @@ export class StateService {
 
   constructor() { }
 
-  SelectedListingCrimeGeodataId: Subject<string> = new Subject<string>();
+  SelectedListing: Subject<Listing> = new Subject<Listing>();
 }

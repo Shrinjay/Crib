@@ -10,13 +10,19 @@ import { MapPopupComponent } from './components/map/popup/map-popup/map-popup.co
 import { ListingsComponent } from './components/listings/listings/listings.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from '../environments/environment';
+import { ToolbarComponent } from './components/toolbar/toolbar/toolbar.component';
+import { CrimeOverviewComponent } from './components/crime-overview/crime-overview.component';
+import { CrimeCardComponent } from './components/crime-overview/crime-card/crime-card.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MapComponent,
     MapPopupComponent,
-    ListingsComponent
+    ListingsComponent,
+    ToolbarComponent,
+    CrimeOverviewComponent,
+    CrimeCardComponent
   ],
   imports: [
     BrowserModule,

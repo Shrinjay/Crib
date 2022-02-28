@@ -2,11 +2,10 @@ import { GetObjectCommand, GetObjectCommandInput, GetObjectCommandOutput, S3Clie
 import * as fs from 'fs';
 import { FeatureCollection } from 'geojson';
 
-const BUCKET_NAME = "crime-geodata";
 const s3Client = new S3Client({region: "us-west-2"});
 
-export async function getListingJSON(key: string): Promise<FeatureCollection> {
-    const req: GetObjectCommandInput = buildObjectRequest(key);
+export async function getFromS3(key: string, bucket: string): Promise<FeatureCollection> {
+    const req: GetObjectCommandInput = buildObjectRequest(key, bucket);
     const command: GetObjectCommand = new GetObjectCommand(req);
 
     const res: GetObjectCommandOutput = await s3Client.send(command);
@@ -14,10 +13,10 @@ export async function getListingJSON(key: string): Promise<FeatureCollection> {
     return await buildObjectResponse(res);
 }
 
-function buildObjectRequest(key: string): GetObjectCommandInput {
+function buildObjectRequest(key: string, bucket: string): GetObjectCommandInput {
     return {
         Key: key,
-        Bucket: BUCKET_NAME
+        Bucket: bucket
     };
 }
 

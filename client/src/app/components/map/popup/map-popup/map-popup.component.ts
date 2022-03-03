@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { Feature, Point, GeoJsonProperties } from 'geojson';
 
 @Component({
@@ -6,14 +6,22 @@ import { Feature, Point, GeoJsonProperties } from 'geojson';
   templateUrl: './map-popup.component.html',
   styleUrls: ['./map-popup.component.css']
 })
-export class MapPopupComponent implements OnInit {
+export class MapPopupComponent implements OnInit, OnChanges {
 
   @Input() point: Feature<Point, GeoJsonProperties> | undefined = undefined
 
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.point)
+    if (this.point?.properties) {
+      this.point.properties['distance'] = Math.round(this.point.properties['distance']);
+    }
+  }
+
+  ngOnChanges() {
+    if (this.point?.properties) {
+      this.point.properties['distance'] = Math.round(this.point.properties['distance']);
+    }
   }
 
 }

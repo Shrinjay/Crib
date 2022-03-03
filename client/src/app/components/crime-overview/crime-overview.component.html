@@ -4,7 +4,10 @@
             <app-map [center]="center"></app-map>
         </div>
         <div class="col-4">
-            <div style="overflow-y: hidden;">
+            <span *ngIf="title">
+                <h4>Crime Overview at <b>{{title}}</b></h4>
+            </span>
+            <div>
                 <div>
                     <app-crime-card [crimeMetrics]="crimeMetrics"></app-crime-card>
                 </div>

@@ -11,3 +11,9 @@ export interface CrimeMetrics {
     stolen_goods: number,
     index: number
 }
+
+export interface GenerateMetricsRequest {
+    name: string,
+    lattitude: number, 
+    longitude: number
+}

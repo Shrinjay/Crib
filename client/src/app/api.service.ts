@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CrimeMetrics, Listing } from './types/api_types';
+import { CrimeMetrics, GenerateMetricsRequest, Listing } from './types/api_types';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { Observable } from 'rxjs';
@@ -11,6 +11,7 @@ import { FeatureCollection, Point, GeoJsonProperties } from 'geojson';
 export class ApiService {
 
   base_url: string = environment.base_url;
+  data_base_url: string = environment.data_base_url;
   constructor(private http: HttpClient) { }
 
   getListings(): Observable<{ [id: string]: Listing }> {
@@ -23,5 +24,9 @@ export class ApiService {
 
   getCrimeMetrics(id: string): Observable<CrimeMetrics> {
     return this.http.get<CrimeMetrics>(`${this.base_url}/crime_metrics/${id}.json`)
+  }
+
+  generateCrimeMetrics(request: GenerateMetricsRequest): Observable<boolean> {
+    return this.http.get<boolean>(`${this.data_base_url}/insights_from_request?name=${request.name}&lat=${request.lattitude}&lon=${request.longitude}`)
   }
 }

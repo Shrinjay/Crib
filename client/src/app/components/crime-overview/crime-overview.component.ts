@@ -12,7 +12,7 @@ import { CrimeMetrics } from 'src/app/types/api_types';
 })
 export class CrimeOverviewComponent {
 
-  title = 'client';
+  title = '';
   crimeMetrics: CrimeMetrics = {} as CrimeMetrics;
   center: LngLatLike | undefined = [-80.5204, 43.4643]
 
@@ -20,6 +20,7 @@ export class CrimeOverviewComponent {
     this.stateService.SelectedListing.subscribe(listing => {
       this.getCrimeData(listing.crime_geodata_id);
       this.center = [listing.Longitude, listing.Latitude]
+      this.title = listing.name;
     })
   }
 

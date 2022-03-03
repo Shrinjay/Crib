@@ -13,6 +13,7 @@ import { environment } from '../environments/environment';
 import { ToolbarComponent } from './components/toolbar/toolbar/toolbar.component';
 import { CrimeOverviewComponent } from './components/crime-overview/crime-overview.component';
 import { CrimeCardComponent } from './components/crime-overview/crime-card/crime-card.component';
+import { RequestComponent } from './components/request/request.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { CrimeCardComponent } from './components/crime-overview/crime-card/crime
     ListingsComponent,
     ToolbarComponent,
     CrimeOverviewComponent,
-    CrimeCardComponent
+    CrimeCardComponent,
+    RequestComponent
   ],
   imports: [
     BrowserModule,

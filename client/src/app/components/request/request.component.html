@@ -1,0 +1,16 @@
+<div class="m-2">
+    <h3>Generate Metrics</h3>
+    <form>
+        <div class="form-group">
+            <label for="name">Property Name</label>
+            <input type="text" (change)="onChange($event)" class="form-control" id="name" aria-describedby="name" placeholder="Enter a description for this property">
+        </div>
+        <div class="form-group">
+            <label for="address">Property Address</label>
+            <input type="text" class="form-control" #addressinput aria-describedby="address" 
+            placeholder="Enter an address for this property">
+        </div>
+        <button class="btn btn-primary" type="button" (click)="onClick()">Generate!</button>
+    </form>
+</div>
+ 

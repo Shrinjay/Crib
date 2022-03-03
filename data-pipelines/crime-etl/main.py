@@ -3,9 +3,11 @@ from pipelines.insights_from_request import insights_from_request
 from load.load_dynamodb import load_to_aws
 from dotenv import load_dotenv
 import flask
+from flask_cors import CORS
 
 load_dotenv()
 app = flask.Flask(__name__)
+CORS(app)
 
 
 @app.route("/insights_from_csv")

@@ -1,0 +1,38 @@
+{
+  "aggregate": true,
+  "aggregate_by": "CrimeType",
+  "source_csv": [
+    "Assault.csv",
+    "Auto_Theft.csv",
+    "Bicycle_Thefts.csv",
+    "Break_and_Enter.csv",
+    "Homicide.csv",
+    "Robbery.csv",
+    "Shootings_and_Firearm_Discharges.csv",
+    "Theft_from_Motor_Vehicle.csv",
+    "Theft_Over.csv"
+  ],
+  "crime_type_mapping": {
+    "Assault.csv":  "Assault",
+    "Auto_Theft.csv":  "Vehicle Theft",
+    "Bicycle_Thefts.csv":  "Theft",
+    "Break_and_Enter.csv":  "Break and Enter",
+    "Homicide.csv":  "Homicide",
+    "Robbery.csv":  "Robbery",
+    "Shootings_and_Firearm_Discharges.csv":  "Weapon",
+    "Theft_from_Motor_Vehicle.csv":  "Theft",
+    "Theft_Over.csv": "Theft"
+  },
+  "col_mapping": {
+    "occurrencedate": "DateTime",
+    "Lat": "Latitude",
+    "Long": "Longitude",
+    "CrimeType": "CrimeType"
+  },
+  "steps": [
+    "crime_type",
+    "col_filter"
+  ],
+  "dest_csv": "toronto-2021.csv"
+
+}

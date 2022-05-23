@@ -14,6 +14,7 @@ class Crime(Enum):
     BREAK_ENTER = "Break and Enter"
     THEFT = "Theft"
     VEHICLE_THEFT = "Vehicle Theft"
+    BICYCLE_THEFT = "Bicycle Theft"
     WEAPON = "Weapon"
     PROPERTY_DAMAGE = "Property Damage"
     PROSTITUTION = "Prostitution"

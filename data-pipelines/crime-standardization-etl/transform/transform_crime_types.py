@@ -2,14 +2,18 @@ from transformer_unit import TransformUnit
 from crime_types import Crime
 import pandas as pd
 import numpy as np
+from utils.config import Config
 
 
 class CrimeTypeTransformer(TransformUnit):
+    def __init__(self, config: Config):
+        self.crime_type_mapping = config.crime_type_mapping
+
     def transform_code_to_std_crime(self, code):
-        return self.CRIME_TYPE_MAPPING[code]
+        return self.crime_type_mapping[code]
 
     def clean_types(self, type):
-        return type if type in self.CRIME_TYPE_MAPPING else np.nan
+        return type if type in self.crime_type_mapping else np.nan
 
     def run_step(self, input_df: pd.DataFrame) -> pd.DataFrame:
         input_df['CrimeType'] = input_df['CrimeType'].map(self.clean_types)

@@ -1,0 +1,6 @@
+{
+  "source_datasets": {
+    "toronto": "toronto-2021.csv",
+    "waterloo": "waterloo-2019.csv"
+  }
+}

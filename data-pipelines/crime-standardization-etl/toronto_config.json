@@ -24,7 +24,7 @@
     "Theft_Over.csv": "Theft"
   },
   "col_mapping": {
-    "occurrencedate": "DateTime",
+    "occurrencedate": "ReportedDateAndTime",
     "Lat": "Latitude",
     "Long": "Longitude",
     "CrimeType": "CrimeType"

@@ -1,5 +1,5 @@
 import pandas as pd
 
 
-def extract_business():
-    return pd.read_csv('./data/Business_Directory.csv')
+def extract_business(file):
+    return pd.read_csv(f"./data/{file}", encoding='ANSI')

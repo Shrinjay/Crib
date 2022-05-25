@@ -1,0 +1,32 @@
+{
+  "steps": [
+    "col_filter",
+    "category_rename",
+    "geocode"
+  ],
+  "source_csv": "business_licenses.csv",
+  "col_mapping": {
+    "Category": "Category",
+    "Operating Name": "Name",
+    "Licence Address Line 1": "Address_1",
+    "Licence Address Line 2": "Address_2",
+    "Licence Address Line 3": "Address_3"
+  },
+  "category_mapping": {
+    "HOLISTIC CENTRE": "Health",
+    "PLACE OF AMUSEMENT": "Amusement",
+    "BILLIARD HALL": "Amusement",
+    "BOWLING HOUSE": "Amusement",
+    "RETAIL STORE (FOOD)": "Food Retail",
+    "PERSONAL SERVICES SETTINGS": "Personal Services",
+    "LAUNDRY": "Laundry",
+    "THEATRE": "Amusement",
+    "PRECIOUS METAL SHOP": "Shopping",
+    "PET SHOP": "Shopping",
+    "EATING ESTABLISHMENT": "Eating",
+    "SECOND HAND SHOP": "Shopping",
+    "ENTERTAINMENT ESTABLISHMENT/NIGHTCLUB": "Nightlife",
+    "SIDEWALK CAFE": "Eating",
+    "PARKLET CAFE": "Eating"
+  }
+}

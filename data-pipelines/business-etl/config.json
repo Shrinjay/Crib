@@ -1,0 +1,6 @@
+{
+  "source_datasets": {
+    "toronto": "toronto.csv",
+    "waterloo": "waterloo.csv"
+  }
+}

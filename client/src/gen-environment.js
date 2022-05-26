@@ -7,7 +7,8 @@ function buildProdEnvObject() {
   let environment = {
     production: false,
     mapbox_key: process.env.MAPBOX_KEY || "",
-    api_base: ""
+    base_url: "",
+    data_base_url: ""
   }
   return environment
 }
@@ -17,7 +18,8 @@ function buildDevEnvObject() {
   let environment = {
     production: false,
     mapbox_key: process.env.MAPBOX_KEY || "",
-    api_base: "http://localhost:8080"
+    base_url: "http://localhost:8080",
+    data_base_url: "http://localhost:5000"
   }
   return environment
 }

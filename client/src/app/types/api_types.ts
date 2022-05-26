@@ -3,6 +3,7 @@ export interface Listing {
     Latitude: number,
     Longitude: number,
     crime_geodata_id: string
+    business_geodata_id: string
 }
 
 export interface CrimeMetrics {

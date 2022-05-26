@@ -24,4 +24,8 @@ app.get('/crime_metrics/:id', (req: any, res: any) => {
     getFromS3(req.params.id, "crime-metrics").then(json => res.json(json));
 })
 
+app.get('/business_data/:id', (req: any, res: any) => {
+    getFromS3(req.params.id, "business-geodata").then(json => res.json(json));
+})
+
 app.listen(PORT, () => console.log(`Running Crib API on port ${PORT}`))

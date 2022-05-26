@@ -8,22 +8,45 @@ const FIELD_TYPES: FieldAttributes = {
     name: "S",
     Longitude: "S",
     Latitude: "S",
-    crime_geodata_id: "S"
+    crime_geodata_id: "S",
+    business_geodata_id: "S"
 }
-const FIELDS = ["id", "name", "Longitude", "Latitude", "crime_geodata_id"]
+const FIELDS = ["id", "name", "Longitude", "Latitude", "crime_geodata_id", "business_geodata_id"]
 
 const dbContext: dynamodb.DynamoDB = new dynamodb.DynamoDB({ "region": "us-west-2" });
 
 export async function getListings(): Promise<{ [id: string]: Listing } | null> {
 
     const res: dynamodb.ScanCommandOutput = await dbContext.scan({ TableName: "listings" })
-    return buildListingItems(res);
+    const listings = buildListingItems(res);
+
+    if (listings) {
+        const crime_listings = Object.entries(listings).filter(([key, val]) => val.crime_geodata_id !== "")
+        const business_listings = Object.entries(listings).filter(([key, val]) => val.business_geodata_id !== "")
+        const business_listing_names = Object.fromEntries(business_listings.map(([key, val]) => [val['name'], key]))
+
+        const merged_listings = Object.fromEntries(
+          crime_listings.map(([key, val]) => {
+            if (val['name'] in business_listing_names) {
+              const id = business_listing_names[val['name']]
+              const ret_obj = {
+                ...val,
+                business_geodata_id: listings[id].business_geodata_id
+              }
+              return [key, ret_obj]
+            }
+            return [key, val]
+          })
+        )
+        return merged_listings
+    }
+    return listings
 }
 
 function buildListingItems(response: dynamodb.ScanCommandOutput): { [id: string]: Listing } | null {
     const listingMap: { [id: string]: Listing } = {}
     const listingItems: ListingResponse[] | null = response?.Items?.map(_buildListingItem) ?? null;
-
+    
     listingItems
         ?.forEach(listingResponse => listingMap[listingResponse.id] = _buildListingVm(listingResponse));
 
@@ -36,10 +59,13 @@ function _buildListingItem(resItem: any): ListingResponse {
         name: "",
         Latitude: "",
         Longitude: "",
-        crime_geodata_id: ""
+        crime_geodata_id: "",
+        business_geodata_id: ""
     }
 
-    FIELDS.forEach(field => res[field as keyof typeof res] = resItem[field][FIELD_TYPES[field]])
+    FIELDS.forEach(field => {
+        if (field in resItem) res[field as keyof typeof res] = resItem[field][FIELD_TYPES[field]]
+    })
 
     return res;
 }

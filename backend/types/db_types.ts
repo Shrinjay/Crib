@@ -17,7 +17,8 @@ export type ListingResponse = {
     name: string,
     Longitude: string,
     Latitude: string,
-    crime_geodata_id: string
+    crime_geodata_id: string,
+    business_geodata_id: string
 }
 
 export type Listing = Omit<ListingResponse, "id">

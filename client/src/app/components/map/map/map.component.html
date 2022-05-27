@@ -7,6 +7,6 @@
               'icon-image': 'marker'
               }" (layerClick)="onClick($event)">
         </mgl-layer>
-        <app-map-popup *ngIf="selectedPoint" [point]="selectedPoint"></app-map-popup>
+        <app-map-popup *ngIf="selectedPoint && selectedData" [point]="selectedPoint" [dataset]="selectedData"></app-map-popup>
     </mgl-map>
 </div>

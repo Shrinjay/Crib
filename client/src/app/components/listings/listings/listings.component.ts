@@ -12,6 +12,7 @@ export class ListingsComponent implements OnInit {
 
   listings: { [id: string]: Listing } | null = null;
   listingIds: string[] | null = null;
+  selectedListing: string | null = null;
 
   constructor(private api: ApiService, private stateService: StateService) { }
 
@@ -32,6 +33,7 @@ export class ListingsComponent implements OnInit {
   onClick(id: string): void {
     if (this.listings) {
       this.stateService.SelectedListing.next(this.listings[id]);
+      this.selectedListing = this.listings[id].name;
     }
   }
 

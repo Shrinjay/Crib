@@ -14,6 +14,7 @@ import { ToolbarComponent } from './components/toolbar/toolbar/toolbar.component
 import { CrimeOverviewComponent } from './components/crime-overview/crime-overview.component';
 import { CrimeCardComponent } from './components/crime-overview/crime-card/crime-card.component';
 import { RequestComponent } from './components/request/request.component';
+import { DatasetsComponent } from './components/datasets/datasets.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { RequestComponent } from './components/request/request.component';
     ToolbarComponent,
     CrimeOverviewComponent,
     CrimeCardComponent,
-    RequestComponent
+    RequestComponent,
+    DatasetsComponent
   ],
   imports: [
     BrowserModule,

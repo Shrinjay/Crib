@@ -1,0 +1,11 @@
+<div ngbDropdown class="d-inline-block">
+    <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>
+        <span *ngIf="selectedData">{{selectedData}}</span>
+        <span *ngIf="!selectedData">Select Dataset</span>
+    </button>
+    <ul ngbDropdownMenu aria-labelledby="dropdownBasic1">
+        <li *ngFor="let option of options" ngbDropdownItem [id]="option" (click)="onClick(option)">
+            <span>{{option}}</span>
+        </li>
+    </ul>
+</div>

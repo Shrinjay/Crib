@@ -1,5 +1,8 @@
 <div ngbDropdown class="d-inline-block">
-    <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Select Listing</button>
+    <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>
+        <span *ngIf="selectedListing">{{selectedListing}}</span>
+        <span *ngIf="!selectedListing">Select Listing</span>
+    </button>
     <ul ngbDropdownMenu aria-labelledby="dropdownBasic1">
         <li *ngFor="let listingId of listingIds" ngbDropdownItem [id]="listingId" (click)="onClick(listingId)">
             <span *ngIf="listings && listingId">{{listings[listingId].name}}</span>

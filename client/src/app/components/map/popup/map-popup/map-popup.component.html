@@ -1,5 +1,9 @@
 <mgl-popup *ngIf="point" [feature]="point">
-    <p *ngIf="point?.properties">Crime Type: {{point.properties?.['CrimeType']}}</p>
-    <p *ngIf="point?.properties">Date/Time (DD/MM/YY): {{point.properties?.['ReportedDateandTime']}}</p>
-    <p *ngIf="point?.properties">Distance: {{point.properties?.['distance']}} meters</p>
+    <p *ngIf="point?.properties && crime_selected">Crime Type: {{point.properties?.['CrimeType']}}</p>
+    <p *ngIf="point?.properties && crime_selected">Date/Time (DD/MM/YY): {{point.properties?.['ReportedDateAndTime']}}</p>
+    <p *ngIf="point?.properties && crime_selected">Distance: {{point.properties?.['distance']}} meters</p>
+    
+    <p *ngIf="point?.properties && business_selected">Business Type: {{point.properties?.['Category']}}</p>
+    <p *ngIf="point?.properties && business_selected">Business Name: {{point.properties?.['Name']}}</p>
+    <p *ngIf="point?.properties && business_selected">Distance: {{point.properties?.['distance']}} meters</p>
 </mgl-popup>

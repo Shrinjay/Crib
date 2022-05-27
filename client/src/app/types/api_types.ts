@@ -16,5 +16,11 @@ export interface CrimeMetrics {
 export interface GenerateMetricsRequest {
     name: string,
     lattitude: number, 
-    longitude: number
+    longitude: number,
+    district: string
+}
+
+export enum Datasets {
+    business = "Business",
+    crime = "Crime"
 }

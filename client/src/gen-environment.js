@@ -8,7 +8,8 @@ function buildProdEnvObject() {
     production: false,
     mapbox_key: process.env.MAPBOX_KEY || "",
     base_url: "",
-    data_base_url: ""
+    crime_data_base_url: "",
+    business_data_base_url: ""
   }
   return environment
 }
@@ -19,7 +20,8 @@ function buildDevEnvObject() {
     production: false,
     mapbox_key: process.env.MAPBOX_KEY || "",
     base_url: "http://localhost:8080",
-    data_base_url: "http://localhost:5000"
+    crime_data_base_url: "http://localhost:5000",
+    business_data_base_url: "http://localhost:5001"
   }
   return environment
 }

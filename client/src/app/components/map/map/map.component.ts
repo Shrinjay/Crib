@@ -22,8 +22,8 @@ export class MapComponent {
 
   constructor(private api: ApiService, private stateService: StateService) {
     this.stateService.SelectedListing.subscribe(listing => {
-      this.getCrimeData(listing.crime_geodata_id);
-      this.getBusinessData(listing.business_geodata_id)
+      if (listing.crime_geodata_id !== "") this.getCrimeData(listing.crime_geodata_id);
+      if (listing.business_geodata_id !== "") this.getBusinessData(listing.business_geodata_id)
     })
     this.stateService.SelectedData.subscribe(dataset => {
       this.selectedData = dataset
@@ -37,7 +37,7 @@ export class MapComponent {
           break;
         }
       }
-      console.log(this.selectedData)
+      console.log(this.geometry)
     })
   }
 

@@ -1,6 +1,14 @@
 from utils.geo_service import get_haversine_distance_meters
 from utils.crime_types import CRIME_CATGS, COUNTED_CRIMES
 import json
+import pandas as pd
+from datetime import date, timedelta
+
+
+def filter_by_time(crime_df):
+    one_year_ago = (date.today() - timedelta(weeks=52)).strftime("%Y-%m-%d")
+    crime_df['ReportedDateAndTime'] = pd.to_datetime(crime_df['ReportedDateAndTime'], format="%Y-%m-%d").dt.strftime("%Y-%m-%d")
+    return crime_df.loc[crime_df['ReportedDateAndTime'] > one_year_ago]
 
 
 def create_crime_association(crime_df, listing_df):
@@ -37,8 +45,8 @@ def _create_geocrime_row(listing_row, crime_df):
                     crime_counts_by_category[crime_category] += 1
 
     crime_counts_by_category['index'] = crime_counts_by_category['stolen_goods'] * 0.2 + \
-        crime_counts_by_category['disturbance'] * 0.4 + \
-        crime_counts_by_category['violent'] * 0.4
+                                        crime_counts_by_category['disturbance'] * 0.4 + \
+                                        crime_counts_by_category['violent'] * 0.4
 
     crime_metric_json = json.dumps(crime_counts_by_category).encode('UTF-8')
 

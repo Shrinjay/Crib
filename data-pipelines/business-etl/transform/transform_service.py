@@ -1,7 +1,6 @@
 from utils.geo_service import get_haversine_distance_meters
 import json
 
-
 def create_business_association(business_df, listing_df):
     business_calculations = listing_df.apply(
         lambda r: _create_geobusiness_row(r, business_df), axis=1

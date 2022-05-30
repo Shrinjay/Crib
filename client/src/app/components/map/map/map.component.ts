@@ -37,7 +37,6 @@ export class MapComponent {
           break;
         }
       }
-      console.log(this.geometry)
     })
   }
 

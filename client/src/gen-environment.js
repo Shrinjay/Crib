@@ -7,7 +7,7 @@ function buildProdEnvObject() {
   let environment = {
     production: false,
     mapbox_key: process.env.MAPBOX_KEY || "",
-    base_url: "",
+    base_url: "http://crib-dev-2.eba-fk2xzjmn.us-west-2.elasticbeanstalk.com",
     crime_data_base_url: "",
     business_data_base_url: ""
   }

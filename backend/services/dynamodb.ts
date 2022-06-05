@@ -97,7 +97,7 @@ function buildListingRequestItem(query: ListingQuery): dynamodb.BatchGetItemComm
     }
 }
 
-export async function incrementNumberOfUsers(source: string) {
+export async function incrementNumberOfClicks(source: string) {
     const params = {
         TableName: "user_sources",
         Key: {
@@ -107,7 +107,7 @@ export async function incrementNumberOfUsers(source: string) {
         },
         UpdateExpression: "add #count :increment_value",
         ExpressionAttributeNames: {
-            "#count": "number_of_users"
+            "#count": "number_of_clicks"
         },
         ExpressionAttributeValues: {
             ":increment_value": {

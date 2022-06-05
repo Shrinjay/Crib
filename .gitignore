@@ -146,3 +146,5 @@ npm-debug.log
 .DS_Store
 package-lock.json
 launch.json
+.vs/Crib/v17/.suo
+.vs/slnx.sqlite

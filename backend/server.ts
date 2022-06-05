@@ -1,4 +1,4 @@
-import { getListings, incrementNumberOfUsers } from './services/dynamodb';
+import { getListings, incrementNumberOfClicks } from './services/dynamodb';
 import { getFromS3 } from './services/s3';
 import { ListingQuery } from './types/db_types';
 require('dotenv').config();
@@ -49,8 +49,8 @@ app.get('/business_data/:id', (req: any, res: any) => {
 })
 
 app.post('/user_analytics/sources/:id', (req: any, res: any) => {
-    incrementNumberOfUsers(req.params.id)
-    .then(res.status(200).send({ message: "The number of users from the source was incremented" }))
+    incrementNumberOfClicks(req.params.id)
+    .then(res.status(200).send({ message: "The number of clicks from the source was incremented" }))
     .catch(err => {
         console.log(err)
         res.status(400).send({ message: err?.Code })

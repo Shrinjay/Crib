@@ -14,8 +14,8 @@ export class SourceRedirectComponent implements OnInit {
   ngOnInit(): void {
     const routeParams = this.route.snapshot.paramMap;
     const sourceFromRoute = routeParams.get('source')!;
-    this.api.incrementSourceCount(sourceFromRoute);
-    this.router.navigate([]);
+    this.api.incrementSourceCount(sourceFromRoute).subscribe();
+    this.router.navigate(['/']);
   }
 
 }

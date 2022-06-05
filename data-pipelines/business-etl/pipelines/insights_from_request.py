@@ -12,4 +12,4 @@ def insights_from_request(request, config: Config):
     crime_gdf = create_geo_frame(crime_df)
     listing_gdf = create_geo_frame(listing_df)
 
-    return base_insights(crime_gdf, listing_gdf)
+    return base_insights(crime_gdf, listing_gdf, config, request)

@@ -1,4 +1,5 @@
 import json
+import os
 
 from pipelines.insights_from_listing import insights_from_listing
 from pipelines.insights_from_request import insights_from_request
@@ -63,4 +64,4 @@ def insights_from_req():
     #     }
 
 
-app.run()
+app.run(host='0.0.0.0', port=os.getenv('PORT'))

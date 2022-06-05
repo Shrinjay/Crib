@@ -15,6 +15,10 @@ import { CrimeOverviewComponent } from './components/crime-overview/crime-overvi
 import { CrimeCardComponent } from './components/crime-overview/crime-card/crime-card.component';
 import { RequestComponent } from './components/request/request.component';
 import { DatasetsComponent } from './components/datasets/datasets.component';
+import { SearchComponent } from './components/search/search.component';
+import { CityBlockComponent } from './components/search/city-block/city-block.component';
+import { BusinessCardComponent } from './components/crime-overview/business-card/business-card.component';
+import { AbsPipe } from './pipes/abs.pipe';
 
 @NgModule({
   declarations: [
@@ -26,7 +30,11 @@ import { DatasetsComponent } from './components/datasets/datasets.component';
     CrimeOverviewComponent,
     CrimeCardComponent,
     RequestComponent,
-    DatasetsComponent
+    DatasetsComponent,
+    SearchComponent,
+    CityBlockComponent,
+    BusinessCardComponent,
+    AbsPipe
   ],
   imports: [
     BrowserModule,

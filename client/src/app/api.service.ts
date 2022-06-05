@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CrimeMetrics, GenerateMetricsRequest, Listing } from './types/api_types';
+import { BusinessMetrics, CrimeMetrics, GenerateMetricsRequest, Listing } from './types/api_types';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { Observable } from 'rxjs';
@@ -29,6 +29,10 @@ export class ApiService {
 
   getCrimeMetrics(id: string): Observable<CrimeMetrics> {
     return this.http.get<CrimeMetrics>(`${this.base_url}/crime_metrics/${id}.json`)
+  }
+
+  getBusinessMetrics(id: string): Observable<BusinessMetrics> {
+    return this.http.get<BusinessMetrics>(`${this.base_url}/business_metrics/${id}.json`)
   }
 
   generateCrimeMetrics(request: GenerateMetricsRequest): Observable<boolean> {

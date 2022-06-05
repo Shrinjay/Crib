@@ -2,5 +2,17 @@
   "source_datasets": {
     "toronto": "toronto-2021.csv",
     "waterloo": "waterloo-2019.csv"
+  },
+  "benchmarks": {
+    "toronto": {
+      "violent_rate": 656,
+      "stolen_goods_rate": 834,
+      "population_density": 20000
+    },
+    "waterloo": {
+      "violent_rate": 250,
+      "stolen_goods_rate": 2030,
+      "population_density": 6000
+    }
   }
 }

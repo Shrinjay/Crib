@@ -48,4 +48,13 @@ app.get('/business_data/:id', (req: any, res: any) => {
     });
 })
 
+app.get('/business_metrics/:id', (req: any, res: any) => {
+    getFromS3(req.params.id, "business-metrics-new")
+    .then(json => res.json(json))
+    .catch(err => {
+        console.log(err)
+        res.status(500).send({message: err?.Code})
+    });
+})
+
 app.listen(PORT, () => console.log(`Running Crib API on port ${PORT}`))

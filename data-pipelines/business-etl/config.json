@@ -2,5 +2,19 @@
   "source_datasets": {
     "toronto": "toronto.csv",
     "waterloo": "waterloo.csv"
+  },
+  "benchmarks": {
+    "toronto": {
+      "area": 630.2,
+      "Amusement": 713,
+      "Eating": 37981,
+      "Food_Retail": 25412,
+      "Health": 2128,
+      "Laundry": 2322,
+      "Nightlife": 143,
+      "Personal_Services": 9800,
+      "Shopping": 2601,
+      "Total": 81100
+    }
   }
 }

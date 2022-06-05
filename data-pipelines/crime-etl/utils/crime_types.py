@@ -44,13 +44,9 @@ COUNTED_CRIMES = {
 }
 CRIME_CATGS = {
     'violent': {
-        Crime.HOMICIDE.value, Crime.SEX_OFFENCE.value, Crime.ASSAULT.value, Crime.WEAPON.value
-    },
-    'disturbance': {
-        Crime.THREATENING.value, Crime.HARASSMENT.value, Crime.INDECENT_ACT.value, Crime.PROSTITUTION, Crime.DRUGS,
-        Crime.INTOXICATED, Crime.SUSPICIOUS, Crime.MISCHIEF, Crime.LIQUOR_OFFENCE, Crime.GRAFFITI
+        Crime.HOMICIDE.value, Crime.ASSAULT.value
     },
     'stolen_goods': {
-        Crime.ROBBERY.value, Crime.BREAK_ENTER.value, Crime.THEFT.value, Crime.VEHICLE_THEFT.value
+        Crime.ROBBERY.value, Crime.THEFT.value, Crime.VEHICLE_THEFT.value
     }
 }

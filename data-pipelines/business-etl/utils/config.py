@@ -5,3 +5,4 @@ class Config:
         config_json = json.load(open(config_file))
 
         self.source_datasets = config_json['source_datasets']
+        self.benchmarks = config_json['benchmarks']

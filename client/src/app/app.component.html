@@ -1,6 +1,6 @@
-<app-toolbar></app-toolbar>
-<app-crime-overview></app-crime-overview>
-<br />
-<app-request></app-request>
+<app-toolbar [showDatasets]="property_selected"></app-toolbar>
+<app-crime-overview *ngIf="property_selected" style="width: 100vw; height: 100vh"></app-crime-overview>
+<!-- <app-request></app-request> -->
+<app-search *ngIf="!property_selected"></app-search>
 
 <router-outlet></router-outlet>

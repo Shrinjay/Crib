@@ -4,12 +4,13 @@ ENVIRONMENT_DIRECTORY = "./environments"
 VALID_ENVIRONMENTS = ["dev", "prod"]
 
 function buildProdEnvObject() {
+  require('dotenv').config()
   let environment = {
-    production: false,
+    production: true,
     mapbox_key: process.env.MAPBOX_KEY || "",
     base_url: "http://crib-dev-2.eba-fk2xzjmn.us-west-2.elasticbeanstalk.com",
-    crime_data_base_url: "",
-    business_data_base_url: ""
+    crime_data_base_url: "http://crime-etl-dev2.eba-2eude4sp.us-west-2.elasticbeanstalk.com",
+    business_data_base_url: "http://business-etl.eba-kxrirbab.us-west-2.elasticbeanstalk.com"
   }
   return environment
 }
@@ -35,7 +36,6 @@ var fileName;
 
 if (process.argv.length <= 2 || !VALID_ENVIRONMENTS.includes(process.argv[2])) {
   console.log("Specify prod or dev environment")
-  return
 }
 
 if (process.argv[2] == "prod") {

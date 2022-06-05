@@ -1,15 +1,30 @@
 <div class="container-flex" style="height: 90vh; overflow-x: hidden;">
     <div class="row">
-        <div class="col-8">
-            <app-map [center]="center"></app-map>
+        <div class="col-6">
+            <app-map [center]="center" style="height: 90vh; width: 90vw"></app-map>
         </div>
-        <div class="col-4">
+        <div class="col-5 offset-1">
             <span *ngIf="title">
-                <h4>Crime Overview at <b>{{title}}</b></h4>
+                <h2>Crime at <b>{{title}}</b></h2>
             </span>
+            <div>
+                <h4>CribCrime Score: <b>{{summaryIndex}} / 100</b></h4>
+            </div>
             <div>
                 <div>
                     <app-crime-card [crimeMetrics]="crimeMetrics"></app-crime-card>
+                </div>
+            </div>
+            
+            <span *ngIf="title">
+                <h2>Businesses at at <b>{{title}}</b></h2>
+            </span>
+            <div>
+                <h4>CriBusiness Score: <b>{{businessIndex}} / 100</b></h4>
+            </div>
+            <div>
+                <div>
+                    <app-business-card [businessMetrics]="businessMetrics"></app-business-card>
                 </div>
             </div>
         </div>

@@ -1,5 +1,5 @@
 import * as dynamodb from '@aws-sdk/client-dynamodb'
-import { KeysAndAttributes } from '@aws-sdk/client-dynamodb';
+import { KeysAndAttributes, UpdateItemCommand } from '@aws-sdk/client-dynamodb';
 import { Listing, ListingResponse, ListingQuery, FieldAttributes } from '../types/db_types';
 
 const TABLE_NAME: string = "listings";
@@ -95,4 +95,30 @@ function buildListingRequestItem(query: ListingQuery): dynamodb.BatchGetItemComm
         },
 
     }
+}
+
+export async function incrementNumberOfUsers(source: string) {
+    const params = {
+        TableName: "user_sources",
+        Key: {
+            "source": {
+                S: source
+            }
+        },
+        UpdateExpression: "add #count :increment_value",
+        ExpressionAttributeNames: {
+            "#count": "number_of_users"
+        },
+        ExpressionAttributeValues: {
+            ":increment_value": {
+                N: "1"
+            }
+        },
+        ReturnConsumedCapacity: "TOTAL",
+        ReturnValues: "ALL_NEW"
+    };
+
+
+
+    await dbContext.updateItem(params);
 }

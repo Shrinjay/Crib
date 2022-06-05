@@ -15,6 +15,7 @@ import { CrimeOverviewComponent } from './components/crime-overview/crime-overvi
 import { CrimeCardComponent } from './components/crime-overview/crime-card/crime-card.component';
 import { RequestComponent } from './components/request/request.component';
 import { DatasetsComponent } from './components/datasets/datasets.component';
+import { SourceRedirectComponent } from './components/source-redirect/source-redirect.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { DatasetsComponent } from './components/datasets/datasets.component';
     CrimeOverviewComponent,
     CrimeCardComponent,
     RequestComponent,
-    DatasetsComponent
+    DatasetsComponent,
+    SourceRedirectComponent
   ],
   imports: [
     BrowserModule,

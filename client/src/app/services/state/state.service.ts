@@ -11,4 +11,13 @@ export class StateService {
 
   SelectedListing: Subject<Listing> = new Subject<Listing>();
   SelectedData: Subject<Datasets> = new Subject<Datasets>();
+  private source: string = "none";
+
+  setSource(source: string) {
+    this.source = source;
+  }
+
+  getSource(): string {
+    return this.source;
+  }
 }

@@ -39,7 +39,7 @@ export class ApiService {
     return this.http.get<boolean>(`${this.business_data_base_url}/insights_from_request?name=${request.name}&lat=${request.lattitude}&lon=${request.longitude}&district=${request.district}`)
   }
 
-  incrementSourceCount(source: string): Observable<any> {
-    return this.http.post(`${this.base_url}/user_analytics/sources/${source}`, null)
+  incrementSourceCount(ipAddress: string, source: string): Observable<any> {
+    return this.http.post(`${this.base_url}/user_analytics/sources/${source}?ip_address=${ipAddress}`, null)
   }
 }

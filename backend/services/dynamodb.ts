@@ -1,5 +1,5 @@
 import * as dynamodb from '@aws-sdk/client-dynamodb'
-import { KeysAndAttributes, UpdateItemCommand } from '@aws-sdk/client-dynamodb';
+import { KeysAndAttributes, UpdateItemCommand, UpdateItemCommandOutput } from '@aws-sdk/client-dynamodb';
 import { Listing, ListingResponse, ListingQuery, FieldAttributes } from '../types/db_types';
 
 const TABLE_NAME: string = "listings";
@@ -121,4 +121,34 @@ export async function incrementNumberOfClicks(source: string) {
 
 
     await dbContext.updateItem(params);
+}
+
+export async function incrementUserVisits(ipAddress: string, source: string): Promise<UpdateItemCommandOutput> {
+    const params = {
+        TableName: "user_ip_addresses",
+        Key: {
+            "ip_address": {
+                S: ipAddress
+            }
+        },
+        UpdateExpression: "add #count :increment_value, #set :source",
+        ExpressionAttributeNames: {
+            "#count": "number_of_visits",
+            "#set": "sources"
+        },
+        ExpressionAttributeValues: {
+            ":increment_value": {
+                N: "1"
+            },
+            ":source": {
+                SS: [source]
+            }
+        },
+        ReturnConsumedCapacity: "TOTAL",
+        ReturnValues: "ALL_NEW"
+    };
+
+
+
+    return await dbContext.updateItem(params);
 }

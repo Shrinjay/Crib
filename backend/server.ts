@@ -1,4 +1,4 @@
-import { getListings, incrementNumberOfClicks } from './services/dynamodb';
+import { getListings, incrementNumberOfClicks, incrementUserVisits } from './services/dynamodb';
 import { getFromS3 } from './services/s3';
 import { ListingQuery } from './types/db_types';
 require('dotenv').config();
@@ -48,9 +48,17 @@ app.get('/business_data/:id', (req: any, res: any) => {
     });
 })
 
-app.post('/user_analytics/sources/:id', (req: any, res: any) => {
-    incrementNumberOfClicks(req.params.id)
-    .then(res.status(200).send({ message: "The number of clicks from the source was incremented" }))
+app.post('/user_analytics/sources/:source', (req: any, res: any) => {
+    if (!req.params.source || !req.query.ip_address) {
+        res.status(400).send({ message: "Invalid parameters" });
+        return;
+    }
+
+    const promise = Promise.all([incrementNumberOfClicks(req.params.source),
+        incrementUserVisits(req.query.ip_address, req.params.source)]);
+
+    promise
+    .then(values => res.status(200).send({ number_of_visits: Number(values[1].Attributes!.number_of_visits.N) }))
     .catch(err => {
         console.log(err)
         res.status(400).send({ message: err?.Code })

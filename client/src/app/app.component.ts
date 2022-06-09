@@ -4,6 +4,8 @@ import { MapboxGeoJSONFeature, MapLayerMouseEvent, MapMouseEvent } from 'mapbox-
 import { ApiService } from './api.service';
 import { GetIpService } from './ip-service.service';
 import { StateService } from './services/state/state.service';
+import { MatDialog } from '@angular/material/dialog';
+import { UserSurveyComponent } from './components/user-survey/user-survey.component';
 
 @Component({
   selector: 'app-root',
@@ -12,12 +14,21 @@ import { StateService } from './services/state/state.service';
 })
 export class AppComponent {
 
-  constructor(private api: ApiService, private stateService: StateService, private getIpService: GetIpService) {
+  constructor(private api: ApiService,
+    private stateService: StateService,
+    private getIpService: GetIpService,
+    public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
     this.getIpService.getIpAddress().subscribe(response =>
-      this.api.incrementSourceCount(response.ip, this.stateService.getSource()).subscribe()
+      this.api.incrementSourceCount(response.ip, this.stateService.getSource()).subscribe(visits => {
+        if (visits == 2) {
+          const dialogRef = this.dialog.open(UserSurveyComponent, {
+            width: '400px',
+          });
+        }
+      })
     );
   }
 }

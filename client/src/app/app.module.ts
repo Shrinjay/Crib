@@ -16,6 +16,10 @@ import { CrimeCardComponent } from './components/crime-overview/crime-card/crime
 import { RequestComponent } from './components/request/request.component';
 import { DatasetsComponent } from './components/datasets/datasets.component';
 import { SourceRedirectComponent } from './components/source-redirect/source-redirect.component';
+import { UserSurveyComponent } from './components/user-survey/user-survey.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon'
+import { MatDialogModule } from '@angular/material/dialog'
 
 @NgModule({
   declarations: [
@@ -28,7 +32,8 @@ import { SourceRedirectComponent } from './components/source-redirect/source-red
     CrimeCardComponent,
     RequestComponent,
     DatasetsComponent,
-    SourceRedirectComponent
+    SourceRedirectComponent,
+    UserSurveyComponent,
   ],
   imports: [
     BrowserModule,
@@ -37,7 +42,10 @@ import { SourceRedirectComponent } from './components/source-redirect/source-red
       accessToken: environment.mapbox_key as string
     }),
     HttpClientModule,
-    NgbModule
+    NgbModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,0 +1,53 @@
+<button mat-icon-button class="close-button" [mat-dialog-close]="true">
+  <mat-icon class="close-icon">close</mat-icon>
+</button>
+
+<div mat-dialog-content>
+  <p>
+    Another survey?! We know that no one enjoys filling out surveys. However
+    this information is crucial to us gauging interest in our product and
+    finding the optimal price to sell it at. Please take two minutes out of your
+    day to help us with this goal.
+  </p>
+
+  <form [formGroup]="surveyForm">
+    <h2 style="float:left">How much are you enjoying this product on a scale of 1 to 10?</h2>
+    <ngb-rating formControlName="enjoyementRating"></ngb-rating>
+
+    <h2 style="float:left">How likely are you to recommend us to a friend on a scale of 1 to 10?</h2>
+    <ngb-rating formControlName="enjoyementRating"></ngb-rating>
+
+    <h2 style="float:left">What is the greatest amount you would be willing to pay per listing for this product?</h2>
+    <label for="nonePerListing">None at all: </label>
+    <input id="nonePerListing" type="radio" formControlName="maxPricePerListing">
+    <label for="onePerListing">$1 per listing: </label>
+    <input id="onePerListing" type="radio" formControlName="maxPricePerListing">
+    <label for="fivePerListing">$5 per listing </label>
+    <input id="fivePerListing" type="radio" formControlName="maxPricePerListing">
+    <label for="tenPerListing">$10 per listing: </label>
+    <input id="tenPerListing" type="radio" formControlName="maxPricePerListing">
+
+    <h2 style="float:left">What is the greatest amount you would be willing to pay per month for this product?</h2>
+    <label for="nonePerMonth">None at all: </label>
+    <input id="nonePerMonth" type="radio" formControlName="maxPricePerMonth">
+    <label for="fivePerMonth">$5 per month: </label>
+    <input id="fivePerMonth" type="radio" formControlName="maxPricePerMonth">
+    <label for="tenPerMonth">$10 per month: </label>
+    <input id="tenPerMonth" type="radio" formControlName="maxPricePerMonth">
+    <label for="twentyPerMonth">$20 per month: </label>
+    <input id="twentyPerMonth" type="radio" formControlName="maxPricePerMonth">
+
+    <h2 style="float:left">Would you be willing to participate in a short user interview for a $10 gift card?</h2>
+    <label for="yes">Yes: </label>
+    <input id="yes" type="radio" formControlName="willingToInterview">
+    <label for="no">Yes: </label>
+    <input id="no" type="radio" formControlName="willingToInterview">
+
+    <label for="email">Email: </label>
+    <input id="email" type="text" formControlName="email">
+  </form>
+
+</div>
+<div mat-dialog-actions>
+  <button mat-button  (click)="submit()"> Submit </button>
+</div>

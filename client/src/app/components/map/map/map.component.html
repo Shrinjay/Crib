@@ -1,12 +1,34 @@
 <div class="col-12">
-    <mgl-map stlye="height: 100%; width: 100vw" [style]="'mapbox://styles/mapbox/streets-v11'" [zoom]="[15]" [center]="center">
-        <mgl-image id="marker" url="https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png"></mgl-image>
-        <mgl-geojson-source id="oneline" [data]="geometry">
-        </mgl-geojson-source>
-        <mgl-layer #points id="points" type="symbol" source="oneline" [layout]="{
-              'icon-image': 'marker'
-              }" (layerClick)="onClick($event)">
-        </mgl-layer>
-        <app-map-popup *ngIf="selectedPoint && selectedData" [point]="selectedPoint" [dataset]="selectedData"></app-map-popup>
-    </mgl-map>
+    <div class="row">
+        <div class="crib-dropdown" *ngIf="showDatasets">
+            <app-datasets style="float: right"></app-datasets>
+        </div>
+        <div class="crib-dropdown" *ngIf="!!selectedData" ngbDropdown>
+            <button class="btn btn-outline-primary" [ngClass]="{'pulse-button': !selectedOption}" style="padding: 0.8rem;" id="dropdownBasic1" ngbDropdownToggle>
+                <span *ngIf="selectedOption">{{selectedOption}}</span>
+                <span *ngIf="!selectedOption">Filter by Category</span>
+            </button>
+            <ul ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                <li *ngFor="let option of options" ngbDropdownItem [id]="option" (click)="onSelect(option)">
+                    <span *ngIf='option !== "Clear filter"'>{{option}}</span>
+                    <span *ngIf='option == "Clear filter"'><b>{{option}}</b></span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <mgl-map stlye="height: 100%; width: 100vw" [style]="'mapbox://styles/mapbox/streets-v11'" [zoom]="[15]" [center]="center">
+            <mgl-image id="marker" url="https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png"></mgl-image>
+            <mgl-marker [lngLat]="center">
+                <img src="https://cdn0.iconfinder.com/data/icons/map-and-navigation-2-1/48/100-512.png" style="width: 5rem">
+            </mgl-marker>
+            <mgl-geojson-source id="oneline" [data]="geometry">
+            </mgl-geojson-source>
+            <mgl-layer #points id="points" type="symbol" source="oneline" [layout]="{
+                  'icon-image': 'marker'
+                  }" (layerClick)="onClick($event)">
+            </mgl-layer>
+            <app-map-popup *ngIf="selectedPoint && selectedData" [point]="selectedPoint" [dataset]="selectedData"></app-map-popup>
+        </mgl-map>
+    </div>
 </div>

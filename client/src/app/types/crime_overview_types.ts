@@ -1,3 +1,5 @@
+import { FeatureCollection, GeoJsonProperties, Point } from "geojson"
+
 export interface CrimeData {
     id: number,
     properties: {
@@ -17,16 +19,8 @@ export interface CardData {
     compare_name?: string
 }
 
-export interface RawCrimeFeature {
-    id: number,
-    type: string,
-    properties: {
-        CrimeType: string,
-        ReportedDateandTime: string,
-        distance: number
-    },
-    geometry: {
-        type: number,
-        coordinates: number[]
-    }
+export type Features = FeatureCollection<Point, GeoJsonProperties>
+
+export interface BinnedFeatures {
+    [type: string]: FeatureCollection<Point, GeoJsonProperties>
 }

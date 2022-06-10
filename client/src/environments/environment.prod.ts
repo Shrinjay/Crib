@@ -1,4 +1,1 @@
-export const environment = {
-  production: true,
-  base_url: "http://localhost:8000"
-};
+export const environment = {"production":true,"mapbox_key":"pk.eyJ1Ijoic2hyaW5qYXkiLCJhIjoiY2t5Y2s0eTdyMHBtdDJ2cG1kcjNlNXA5ZSJ9.xEJZKgFcnLfhMIHinIIWWw","base_url":"http://crib-dev-2.eba-fk2xzjmn.us-west-2.elasticbeanstalk.com","crime_data_base_url":"http://crime-etl-dev2.eba-2eude4sp.us-west-2.elasticbeanstalk.com","business_data_base_url":"http://business-etl.eba-kxrirbab.us-west-2.elasticbeanstalk.com"}

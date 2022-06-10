@@ -14,12 +14,21 @@ export class UserSurveyComponent implements OnInit {
     maxPricePerListing: new FormControl('', Validators.required),
     maxPricePerMonth: new FormControl('', Validators.required),
     willingToInterview: new FormControl('', Validators.required),
-    email: new FormControl('', Validators.required)
+    email: new FormControl('')
   });
 
   constructor(private dialogRef: MatDialogRef<UserSurveyComponent>) { }
 
   ngOnInit(): void {
+    this.surveyForm.get('willingToInterview')!.valueChanges
+      .subscribe(value => {
+        if (value) {
+          this.surveyForm.get('email')!.setValidators([Validators.required, Validators.email])
+        } else {
+          this.surveyForm.get('email')!.setValidators([Validators.email]);
+        }
+        this.surveyForm.controls['email'].updateValueAndValidity();
+      });
   }
 
   submit() {

@@ -18,8 +18,8 @@ import { DatasetsComponent } from './components/datasets/datasets.component';
 import { SourceRedirectComponent } from './components/source-redirect/source-redirect.component';
 import { UserSurveyComponent } from './components/user-survey/user-survey.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatIconModule } from '@angular/material/icon'
-import { MatDialogModule } from '@angular/material/dialog'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from './material.module';
 
 @NgModule({
   declarations: [
@@ -33,7 +33,7 @@ import { MatDialogModule } from '@angular/material/dialog'
     RequestComponent,
     DatasetsComponent,
     SourceRedirectComponent,
-    UserSurveyComponent,
+    UserSurveyComponent
   ],
   imports: [
     BrowserModule,
@@ -44,8 +44,8 @@ import { MatDialogModule } from '@angular/material/dialog'
     HttpClientModule,
     NgbModule,
     ReactiveFormsModule,
-    MatDialogModule,
-    MatIconModule
+    BrowserAnimationsModule,
+    MaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]

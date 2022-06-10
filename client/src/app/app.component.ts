@@ -17,15 +17,16 @@ export class AppComponent {
   constructor(private api: ApiService,
     private stateService: StateService,
     private getIpService: GetIpService,
-    public dialog: MatDialog) {
+    private dialog: MatDialog) {
   }
 
   ngOnInit(): void {
     this.getIpService.getIpAddress().subscribe(response =>
-      this.api.incrementSourceCount(response.ip, this.stateService.getSource()).subscribe(visits => {
-        if (visits == 2) {
+      this.api.incrementSourceCount(response.ip, this.stateService.getSource()).subscribe(response => {
+        if (response.number_of_visits == 2) {
           const dialogRef = this.dialog.open(UserSurveyComponent, {
-            width: '400px',
+            width: '900px',
+            height: '700px'
           });
         }
       })

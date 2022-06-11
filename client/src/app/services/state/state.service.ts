@@ -12,4 +12,13 @@ export class StateService {
   SelectedListing: BehaviorSubject<Listing> = new BehaviorSubject<Listing>({name: "", Latitude: 0.0, Longitude: 0.0, crime_geodata_id: "", business_geodata_id: ""});
   SelectedCity: BehaviorSubject<string> = new BehaviorSubject<string>("");
   SelectedData: Subject<Datasets> = new Subject<Datasets>();
+  private source: string = "none";
+
+  setSource(source: string) {
+    this.source = source;
+  }
+
+  getSource(): string {
+    return this.source;
+  }
 }

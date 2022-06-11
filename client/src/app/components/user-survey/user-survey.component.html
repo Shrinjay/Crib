@@ -1,0 +1,64 @@
+<button mat-icon-button class="close-button" [mat-dialog-close]="true">
+  <mat-icon class="close-icon">close</mat-icon>
+</button>
+
+<div>
+  <p style="text-align:center">
+    Another survey?! We know that no one enjoys filling out surveys. However
+    this information is crucial to us gauging interest in our product and
+    finding the optimal price to sell it at. Please take two minutes out of your
+    day to help us with this goal.
+  </p>
+
+  <form [formGroup]="surveyForm">
+    <h5>How much are you enjoying this product on a scale of 1 to 10?</h5>
+    <div>
+      <ngb-rating formControlName="enjoyementRating"></ngb-rating>
+    </div>
+
+    <h5>How likely are you to recommend us to a friend on a scale of 1 to 10?</h5>
+    <div>
+      <ngb-rating formControlName="recommendationRating"></ngb-rating>
+    </div>
+
+    <h5>What is the greatest amount you would be willing to pay per listing for this product?</h5>
+    <mat-radio-group formControlName="maxPricePerListing">
+      <mat-radio-button value="none_per_listing">None at all</mat-radio-button>
+      <mat-radio-button value="one_per_listing">$1 per listing</mat-radio-button>
+      <mat-radio-button value="five_per_listing">$5 per listing</mat-radio-button>
+      <mat-radio-button value="ten_per_listing">$10 per listing</mat-radio-button>
+    </mat-radio-group>
+    <br>
+    <br>
+
+    <h5>What is the greatest amount you would be willing to pay per month for this product?</h5>
+    <mat-radio-group formControlName="maxPricePerMonth">
+      <mat-radio-button value="none_per_month">None at all</mat-radio-button>
+      <mat-radio-button value="five_per_month">$5 per month</mat-radio-button>
+      <mat-radio-button value="ten_per_month">$10 per month</mat-radio-button>
+      <mat-radio-button value="twenty_per_month">$20 per month</mat-radio-button>
+    </mat-radio-group>
+    <br>
+    <br>
+
+    <h5>Would you be willing to participate in a short user interview for a $10 gift card?</h5>
+    <mat-radio-group formControlName="willingToBeInterviewed">
+      <mat-radio-button [value]="true">Yes</mat-radio-button>
+      <mat-radio-button [value]="false">No</mat-radio-button>
+    </mat-radio-group>
+    <br>
+
+    <mat-form-field>
+      <mat-label>Email:</mat-label>
+      <input matInput formControlName="email" />
+    </mat-form-field>
+
+    <div *ngIf="surveyForm.controls['email'].invalid">
+      Email is not valid
+    </div>
+  </form>
+</div>
+
+<div mat-dialog-actions>
+  <button class="btn btn-primary" type="button" (click)="submit()" [disabled]="!surveyForm.valid">Submit!</button>
+</div>

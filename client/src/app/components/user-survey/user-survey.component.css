@@ -1,0 +1,17 @@
+.close-button {
+  float: right;
+  top: -24px;
+  right: -24px;
+}
+
+ngb-rating {
+  font-size: 50px;
+  margin-top: -15px;
+  text-align: center;
+  padding-left: 16px;
+}
+
+mat-radio-button {
+  padding-left: 16px;
+  margin-top: 12px;
+}

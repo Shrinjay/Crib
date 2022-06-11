@@ -20,6 +20,10 @@ import { UserSurveyComponent } from './components/user-survey/user-survey.compon
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
+import { SearchComponent } from './components/search/search.component';
+import { CityBlockComponent } from './components/search/city-block/city-block.component';
+import { BusinessCardComponent } from './components/crime-overview/business-card/business-card.component';
+import { AbsPipe } from './pipes/abs.pipe';
 
 @NgModule({
   declarations: [
@@ -33,7 +37,11 @@ import { MaterialModule } from './material.module';
     RequestComponent,
     DatasetsComponent,
     SourceRedirectComponent,
-    UserSurveyComponent
+    UserSurveyComponent,
+    SearchComponent,
+    CityBlockComponent,
+    BusinessCardComponent,
+    AbsPipe
   ],
   imports: [
     BrowserModule,

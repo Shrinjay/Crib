@@ -1,0 +1,37 @@
+<!-- <h1><b>Crib</b></h1> -->
+<div class="container">
+    <div class="row">
+        <div class="col-10 offset-1">
+            <br />
+            <div  class="d-flex justify-content-center">
+                <h1><b>Find your neighbourhood in</b> {{selected_city}}</h1>
+            </div>
+            <div class="row d-flex justify-content-center">
+                <app-city-block *ngFor="let city of cities" (mouseout)="hoverExit(city)" (mouseover)="onHover(city)"
+                 (click)="onClick(city)"  [id]="city" [selected_city]="selected_city" [hover_city]="hover_city" [city]="city"
+                [city_picture]="city_pictures[city]"></app-city-block>
+            </div>
+            <br />
+            <form>
+                <div class="form-group">
+                    <input type="text" class="form-control" #addressinput aria-describedby="address" 
+                    placeholder="Enter an address to learn more" >
+                </div>
+                <div style="text-align: center;">
+                    <button class="btn btn-primary" type="button" (click)="onButtonClick()">Let's Go!</button>
+                </div> 
+            </form>
+            <br />
+            <div *ngIf="loading" class="d-flex justify-content-center">
+                <div class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+            <h2>Recent Searches</h2>
+            <ul>
+                <li *ngFor="let listing of listingArray"><a href="#" (click)="onLinkClick(listing.id)">{{listing.name}}</a></li>
+            </ul>
+        </div>
+    </div>
+
+</div>

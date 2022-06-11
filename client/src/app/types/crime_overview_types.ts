@@ -9,6 +9,14 @@ export interface CrimeData {
     longitude: number
 }
 
+export interface CardData {
+    name: string,
+    compare: boolean,
+    value: number,
+    compare_value?: number,
+    compare_name?: string
+}
+
 export interface RawCrimeFeature {
     id: number,
     type: string,

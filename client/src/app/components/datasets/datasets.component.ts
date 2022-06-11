@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/api.service';
 import { StateService } from 'src/app/services/state/state.service';
 import { Datasets } from 'src/app/types/api_types';
@@ -10,13 +10,24 @@ import { Datasets } from 'src/app/types/api_types';
 })
 export class DatasetsComponent {
 
-  options: Datasets[] = [
-    Datasets.business,
-    Datasets.crime
-  ]
+  options: Datasets[] = []
   selectedData: Datasets | null = null;
 
-  constructor(private stateService: StateService) {}
+  constructor(private stateService: StateService) {
+    stateService.SelectedCity.subscribe(city => {
+      if (city === "Waterloo") {
+        this.options = [
+          Datasets.crime
+        ]
+      }
+      else {
+        this.options = [
+          Datasets.crime,
+          Datasets.business
+        ]
+      }
+    })
+  }
 
 
   onClick(dataset: Datasets): void {

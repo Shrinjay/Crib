@@ -24,7 +24,7 @@ class DB:
         if os.getenv("environment") == "LOCAL":
             self.cur = aws.client('dynamodb', endpoint_url=os.getenv("local_db_endpoint"))
         else:
-            self.cur = aws.client('dynamodb')
+            self.cur = aws.client('dynamodb', region_name='us-west-2')
 
 
 def _create_aws_item(data_json, index):
@@ -86,7 +86,7 @@ def load_to_aws(gdf):
 
 
 def load_s3(bucket, key, json_file):
-    s3_client = aws.client('s3')
+    s3_client = aws.client('s3', region_name='us-west-2')
     s3_client.put_object(Bucket=bucket, Key=key, Body=json_file)
 
 

@@ -5,7 +5,7 @@ import uuid
 import pandas as pd
 
 WATERLOO_ID = "c7fe6867-d74a-4558-a3df-68593cbb4aff"
-S3_BUCKET_CRIME_GEODATA = "business-geodata"
+S3_BUCKET_CRIME_GEODATA = "business-geodata-new"
 LISTINGS_TABLE = "listings"
 MAX_REQS = 10
 GEOMETRY_COLS = ['geometry']
@@ -63,16 +63,25 @@ def build_s3_requests_business_geodata(gdf_s3):
     return s3_requests
 
 
+def build_s3_requests_business_metrics(gdf_s3):
+    byte_jsons = list(map(bytes, gdf_s3['business_metrics']))
+    s3_requests = dict(zip(list(gdf_s3['business_geodata_id']), byte_jsons))
+    return s3_requests
+
+
 def load_to_aws(gdf):
     gdf['business_geodata_id'] = [str(uuid.uuid4()) for _ in range(len(gdf.index))]
     gdf_db = build_db_gdf(gdf)
     gdf_s3 = build_s3_gdf(gdf)
 
     s3_requests_business_geodata = build_s3_requests_business_geodata(gdf_s3)
+    s3_requests_business_metrics = build_s3_requests_business_metrics(gdf_s3)
     db_requests = transform_df_for_dynamodb(gdf_db)
 
     for k, v in s3_requests_business_geodata.items():
-        load_s3("business-geodata", f"{k}.json", v)
+        load_s3("business-geodata-new", f"{k}.json", v)
+    for k, v in s3_requests_business_metrics.items():
+        load_s3("business-metrics-new", f"{k}.json", v)
     load_dynamodb(db_requests, len(gdf.index))
 
 

@@ -4,12 +4,12 @@
             <div *ngIf="metricObj['compare']">
                 <span 
                 *ngIf="metricObj['compare_value'] && metricObj['compare_value'] < 0"
-                style="color: green">
+                style="color: red">
                     &darr;
                 </span>
                 <span 
                 *ngIf="metricObj['compare_value'] && metricObj['compare_value'] > 0"
-                style="color: red">
+                style="color: green">
                     &uarr;
                 </span>
                 <b>{{metricObj['value']}}</b> {{metricObj['name']}}
@@ -20,7 +20,7 @@
         </div>
         
         <div *ngIf="metricObj['compare']" class="card-subtitle mb-2 text-muted" style="font-size: 1.25rem">
-            {{metricObj['compare_value']  | abs}}%
+            {{metricObj['compare_value'] | abs}}%
             <span 
             *ngIf="metricObj['compare_value'] && metricObj['compare_value'] < 0">
                 lower

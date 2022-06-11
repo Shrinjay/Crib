@@ -1,5 +1,5 @@
 <div ngbDropdown class="d-inline-block">
-    <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>
+    <button class="btn btn-outline-primary" [ngClass]="{'pulse-button': !selectedData}" style="padding: 0.8rem;" id="dropdownBasic1" ngbDropdownToggle>
         <span *ngIf="selectedData">{{selectedData}}</span>
         <span *ngIf="!selectedData">Select Dataset</span>
     </button>

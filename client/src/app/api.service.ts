@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CrimeMetrics, GenerateMetricsRequest, Listing } from './types/api_types';
+import { CrimeMetrics, GenerateMetricsRequest, Listing, SurveyResponse } from './types/api_types';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { Observable } from 'rxjs';
@@ -41,5 +41,12 @@ export class ApiService {
 
   incrementSourceCount(ipAddress: string, source: string): Observable<any> {
     return this.http.post(`${this.base_url}/user_analytics/sources/${source}?ip_address=${ipAddress}`, null)
+  }
+
+  addUserSurveyResponse(ipAddress: string, surveyResponse: SurveyResponse) {
+    return this.http.post<SurveyResponse>(`${this.base_url}/user_analytics/survey/${ipAddress}`,
+      {
+        "survey_response": surveyResponse
+      });
   }
 }

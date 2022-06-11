@@ -1,6 +1,6 @@
 import * as dynamodb from '@aws-sdk/client-dynamodb'
 import { KeysAndAttributes, UpdateItemCommand, UpdateItemCommandOutput } from '@aws-sdk/client-dynamodb';
-import { Listing, ListingResponse, ListingQuery, FieldAttributes } from '../types/db_types';
+import { Listing, ListingResponse, ListingQuery, FieldAttributes, SurveyResponse } from '../types/db_types';
 
 const TABLE_NAME: string = "listings";
 const FIELD_TYPES: FieldAttributes = {
@@ -148,7 +148,36 @@ export async function incrementUserVisits(ipAddress: string, source: string): Pr
         ReturnValues: "ALL_NEW"
     };
 
-
-
     return await dbContext.updateItem(params);
+}
+
+export async function addUserSurveyResponse(ipAddress: string, surveyResponse: SurveyResponse) {
+    const params = {
+        "TableName": "user_survey_responses",
+        "Item": {
+            "ip_address": {
+                S: ipAddress
+            },
+            "enjoyement_rating": {
+                N: surveyResponse.enjoyementRating.toString()
+            },
+            "recommendation_rating": {
+                N: surveyResponse.recommendationRating.toString()
+            },
+            "max_price_per_listing": {
+                S: surveyResponse.maxPricePerListing
+            },
+            "max_price_per_month": {
+                S: surveyResponse.maxPricePerMonth
+            },
+            "willing_to_be_interviewed": {
+                BOOL: surveyResponse.willingToBeInterviewed
+            },
+            "email": {
+                S: surveyResponse.email
+            }
+        }
+    }
+
+    return await dbContext.putItem(params);
 }

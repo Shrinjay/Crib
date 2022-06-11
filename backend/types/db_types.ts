@@ -22,3 +22,12 @@ export type ListingResponse = {
 }
 
 export type Listing = Omit<ListingResponse, "id">
+
+export type SurveyResponse = {
+    enjoyementRating: number,
+    recommendationRating: number,
+    maxPricePerListing: string,
+    maxPricePerMonth: string,
+    willingToBeInterviewed: boolean,
+    email: string
+}

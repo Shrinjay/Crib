@@ -58,3 +58,12 @@ export enum Datasets {
     business = "Business",
     crime = "Crime"
 }
+
+export interface SurveyResponse {
+    enjoyementRating: number,
+    recommendationRating: number,
+    maxPricePerListing: string,
+    maxPricePerMonth: string,
+    willingToBeInterviewed: boolean,
+    email: string
+}

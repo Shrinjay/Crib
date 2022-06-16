@@ -1,6 +1,6 @@
 import * as dynamodb from '@aws-sdk/client-dynamodb'
-import { KeysAndAttributes } from '@aws-sdk/client-dynamodb';
-import { Listing, ListingResponse, ListingQuery, FieldAttributes } from '../types/db_types';
+import { KeysAndAttributes, UpdateItemCommand, UpdateItemCommandOutput } from '@aws-sdk/client-dynamodb';
+import { Listing, ListingResponse, ListingQuery, FieldAttributes, SurveyResponse } from '../types/db_types';
 
 const TABLE_NAME: string = "listings";
 const FIELD_TYPES: FieldAttributes = {
@@ -95,4 +95,89 @@ function buildListingRequestItem(query: ListingQuery): dynamodb.BatchGetItemComm
         },
 
     }
+}
+
+export async function incrementNumberOfClicks(source: string) {
+    const params = {
+        TableName: "user_sources",
+        Key: {
+            "source": {
+                S: source
+            }
+        },
+        UpdateExpression: "add #count :increment_value",
+        ExpressionAttributeNames: {
+            "#count": "number_of_clicks"
+        },
+        ExpressionAttributeValues: {
+            ":increment_value": {
+                N: "1"
+            }
+        },
+        ReturnConsumedCapacity: "TOTAL",
+        ReturnValues: "ALL_NEW"
+    };
+
+
+
+    await dbContext.updateItem(params);
+}
+
+export async function incrementUserVisits(ipAddress: string, source: string): Promise<UpdateItemCommandOutput> {
+    const params = {
+        TableName: "user_ip_addresses",
+        Key: {
+            "ip_address": {
+                S: ipAddress
+            }
+        },
+        UpdateExpression: "add #count :increment_value, #set :source",
+        ExpressionAttributeNames: {
+            "#count": "number_of_visits",
+            "#set": "sources"
+        },
+        ExpressionAttributeValues: {
+            ":increment_value": {
+                N: "1"
+            },
+            ":source": {
+                SS: [source]
+            }
+        },
+        ReturnConsumedCapacity: "TOTAL",
+        ReturnValues: "ALL_NEW"
+    };
+
+    return await dbContext.updateItem(params);
+}
+
+export async function addUserSurveyResponse(ipAddress: string, surveyResponse: SurveyResponse) {
+    const params = {
+        "TableName": "user_survey_responses",
+        "Item": {
+            "ip_address": {
+                S: ipAddress
+            },
+            "enjoyement_rating": {
+                N: surveyResponse.enjoyementRating.toString()
+            },
+            "recommendation_rating": {
+                N: surveyResponse.recommendationRating.toString()
+            },
+            "max_price_per_listing": {
+                S: surveyResponse.maxPricePerListing
+            },
+            "max_price_per_month": {
+                S: surveyResponse.maxPricePerMonth
+            },
+            "willing_to_be_interviewed": {
+                BOOL: surveyResponse.willingToBeInterviewed
+            },
+            "email": {
+                S: surveyResponse.email
+            }
+        }
+    }
+
+    return await dbContext.putItem(params);
 }

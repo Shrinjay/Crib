@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FeatureCollection, GeoJsonProperties, Point } from 'geojson';
 import { LngLatLike } from 'mapbox-gl';
 import { ApiService } from 'src/app/api.service';
@@ -11,6 +11,7 @@ import { BusinessMetrics, CrimeMetrics } from 'src/app/types/api_types';
   styleUrls: ['./crime-overview.component.css']
 })
 export class CrimeOverviewComponent {
+  @Input() showDatasets: boolean = false;
 
   title = '';
   crimeMetrics: CrimeMetrics = {} as CrimeMetrics;

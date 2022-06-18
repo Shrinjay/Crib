@@ -16,12 +16,14 @@ export class MapPopupComponent implements OnInit, OnChanges {
   crime_selected: boolean = false;
   business_selected: boolean = false;
 
-  constructor() {}
+  date_format: string | null = null;
 
   ngOnInit(): void {
     if (this.point?.properties) {
       this.point.properties['distance'] = Math.round(this.point.properties['distance']);
     }
+    if (this.point?.properties?.['ReportedDateAndTime'].includes('/')) this.date_format = "DD/MM/YYYY"
+    if (this.point?.properties?.['ReportedDateAndTime'].includes('-')) this.date_format = "YYYY-MM-DD"
     switch(this.dataset) {
       case(Datasets.crime): {
         this.business_selected = false;

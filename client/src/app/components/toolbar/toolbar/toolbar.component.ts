@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { StateService } from 'src/app/services/state/state.service';
 
 @Component({
   selector: 'app-toolbar',
@@ -8,9 +9,13 @@ import { Component, Input, OnInit } from '@angular/core';
 export class ToolbarComponent implements OnInit {
   
 
-  constructor() { }
+  constructor(private stateService: StateService) { }
 
   ngOnInit(): void {
+  }
+
+  onClick() {
+    window.location.reload();
   }
 
 }

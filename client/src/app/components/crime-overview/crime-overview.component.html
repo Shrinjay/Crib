@@ -4,27 +4,47 @@
             <app-map *ngIf="center && showDatasets" [showDatasets]="showDatasets" [center]="center" style="height: 90vh; width: 90vw"></app-map>
         </div>
         <div class="col-6">
-            <span *ngIf="title">
-                <h2>Crime at <b>{{title}}</b></h2>
-            </span>
-            <div>
-                <h4>CribCrime Score: <b>{{summaryIndex}} / 100</b></h4>
-            </div>
-            <div>
+            <div *ngIf="showCrime">
+                <span *ngIf="title">
+                    <h2>Crime at <b>{{title}}</b></h2>
+                </span>
                 <div>
-                    <app-crime-card [crimeMetrics]="crimeMetrics"></app-crime-card>
+                    <h4>
+                        CribCrime Score: <b>{{summaryIndex}} / 100</b>
+                        <span 
+                            placement="bottom" 
+                            ngbTooltip="
+                            The CribCrime score is calculated by comparing the crime rate near this property to the average property in this city. The higher the better!
+                            "
+                        >  &#9432;</span>
+                    </h4>
+                </div>
+                <div>
+                    <div>
+                        <app-crime-card [crimeMetrics]="crimeMetrics"></app-crime-card>
+                    </div>
                 </div>
             </div>
             
-            <span *ngIf="title">
-                <h2>Businesses at at <b>{{title}}</b></h2>
-            </span>
-            <div>
-                <h4>CriBusiness Score: <b>{{businessIndex}} / 100</b></h4>
-            </div>
-            <div>
+            <div *ngIf="showBusiness">
+                <span *ngIf="title && showBusiness">
+                    <h2>Businesses at at <b>{{title}}</b></h2>
+                </span>
                 <div>
-                    <app-business-card [businessMetrics]="businessMetrics"></app-business-card>
+                    <h4>
+                        CriBusiness Score: <b>{{businessIndex}} / 100</b>
+                        <span 
+                            placement="bottom" 
+                            ngbTooltip="
+                            The CriBusiness score is calculated by comparing the number of businesses near this property to the average property in this city. The higher the better!
+                            "
+                        >  &#9432;</span>
+                    </h4>
+                </div>
+                <div>
+                    <div>
+                        <app-business-card [businessMetrics]="businessMetrics"></app-business-card>
+                    </div>
                 </div>
             </div>
         </div>

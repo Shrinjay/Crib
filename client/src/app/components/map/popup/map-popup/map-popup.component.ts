@@ -42,6 +42,8 @@ export class MapPopupComponent implements OnInit, OnChanges {
     if (this.point?.properties) {
       this.point.properties['distance'] = Math.round(this.point.properties['distance']);
     }
+    if (this.point?.properties?.['ReportedDateAndTime'].includes('/')) this.date_format = "DD/MM/YYYY"
+    if (this.point?.properties?.['ReportedDateAndTime'].includes('-')) this.date_format = "YYYY-MM-DD"
     switch(this.dataset) {
       case(Datasets.crime): {
         this.business_selected = false;

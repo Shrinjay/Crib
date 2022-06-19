@@ -1,6 +1,6 @@
 /// <reference types="@types/googlemaps" />
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { forkJoin } from 'rxjs';
+import { catchError, forkJoin, of } from 'rxjs';
 import { ApiService } from 'src/app/api.service';
 import { StateService } from 'src/app/services/state/state.service';
 import { GenerateMetricsRequest, ListingId } from 'src/app/types/api_types';
@@ -51,10 +51,36 @@ export class SearchComponent implements OnInit {
   }
 
   ngAfterViewInit(): void {
-    const options = {
+    let options: any = {
       componentRestrictions: { country: "ca" },
-      fields: ["geometry", "name"]
+      fields: ["geometry", "name"],
     };
+
+    if (this.selected_city === "Toronto") {
+      options = {
+        ...options,
+        bounds: {
+          east: -79.234,
+          west: -79.609,
+          north: 43.775,
+          south: 43.585
+        },
+        strictBounds: true
+      }
+    }
+
+    else if (this.selected_city === "Waterloo") {
+      options = {
+        ...options,
+        bounds: {
+          east: -80.435,
+          west: -80.599,
+          north: 43.525,
+          south: 43.404
+        },
+        strictBounds: true
+      }
+    }
 
     const autocomplete = new google.maps.places.Autocomplete(this.addressInput.nativeElement, options);
     google.maps.event.addListener(autocomplete, 'place_changed', () => {
@@ -85,18 +111,35 @@ export class SearchComponent implements OnInit {
       } else {
         if (this.request.district === "waterloo") {
           this.api.generateCrimeMetrics(this.request)
+          .pipe(
+            catchError(_ => {
+              alert("Sorry, we couldn't process your request! Please try again.");
+              this.loading = false;
+              return of(false)
+            })
+          )
           .subscribe(result => {
             if (result) {
-              this.api.getListings().subscribe(listings => {
-                const selectedListing = Object.values(listings).find(listing => listing.name === this.request.name) as Listing
-                this.state.SelectedListing.next(selectedListing)
-                this.loading = false;
+              this.api.getListings()
+              .subscribe(listings => {
+                if (listings) {
+                  const selectedListing = Object.values(listings).find(listing => listing.name === this.request.name) as Listing
+                  this.state.SelectedListing.next(selectedListing)
+                  this.loading = false;
+                }
               })
             }
           })
         }
         else {
           forkJoin([this.api.generateCrimeMetrics(this.request), this.api.generateBusinessMetrics(this.request)])
+          .pipe(
+            catchError(_ => {
+              alert("Sorry, we couldn't process your request! Please try again.");
+              this.loading = false;
+              return of(false)
+            })
+          )
         .subscribe(result => {
           if (result) {
             this.api.getListings().subscribe(listings => {
@@ -117,6 +160,8 @@ export class SearchComponent implements OnInit {
       ...this.request,
       district: city.toLowerCase()
     }
+
+    this.ngAfterViewInit();
   }
 
   onHover(city: string) {
@@ -129,6 +174,7 @@ export class SearchComponent implements OnInit {
 
   onLinkClick(id: string) {
     const selectedListing = this.listings[id]
+    console.log(selectedListing)
     this.state.SelectedListing.next(selectedListing)
   }
 

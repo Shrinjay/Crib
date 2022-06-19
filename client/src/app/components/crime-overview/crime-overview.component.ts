@@ -20,12 +20,18 @@ export class CrimeOverviewComponent {
   summaryIndex: number = 0;
   businessIndex: number = 0;
 
+  showBusiness: boolean = false;
+  showCrime: boolean = true;
+
   constructor(private api: ApiService, private stateService: StateService) {
     this.stateService.SelectedListing.subscribe(listing => {
       this.getCrimeData(listing.crime_geodata_id);
       this.getBusinessData(listing.business_geodata_id)
       this.center = [listing.Longitude, listing.Latitude]
       this.title = listing.name;
+
+      if (listing.crime_geodata_id !== "") this.showCrime = true;
+      if (listing.business_geodata_id !== "") this.showBusiness = true;
     })
   }
 

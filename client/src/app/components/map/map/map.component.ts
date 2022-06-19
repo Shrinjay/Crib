@@ -78,7 +78,7 @@ export class MapComponent implements OnInit {
           break;
         }
       }
-      if (!this.options.includes("Clear filter")) this.options.push("Clear filter")
+      if (!this.options.includes("Clear filter")) this.options.unshift("Clear filter")
     })
   }
 

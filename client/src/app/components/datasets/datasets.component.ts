@@ -14,18 +14,13 @@ export class DatasetsComponent {
   selectedData: Datasets | null = null;
 
   constructor(private stateService: StateService) {
-    stateService.SelectedCity.subscribe(city => {
-      if (city === "Waterloo") {
-        this.options = [
-          Datasets.crime
-        ]
-      }
-      else {
-        this.options = [
-          Datasets.crime,
-          Datasets.business
-        ]
-      }
+    stateService.SelectedListing.subscribe(listing => {
+      let options = [];
+
+      if (listing.crime_geodata_id !== "") options.push(Datasets.crime)
+      if (listing.business_geodata_id !== "") options.push(Datasets.business)
+
+      this.options = options;
     })
   }
 

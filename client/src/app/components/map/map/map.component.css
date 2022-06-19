@@ -1,6 +1,15 @@
-mgl-map {
-    height: 90vh;
-    width: 65vw;
+@media only screen and (max-width: 576px) {
+    mgl-map {
+        height: 50vh;
+        width: 92vw;
+    }
+  }
+
+@media only screen and (min-width: 577px) {
+    mgl-map {
+        height: 90vh;
+        width: 65vw;
+    }
 }
 
 .crib-dropdown {

@@ -6,10 +6,9 @@ from datetime import date, timedelta
 from utils.config import Config
 
 
-def filter_by_time(crime_df):
-    one_year_ago = (date.today() - timedelta(weeks=52)).strftime("%Y-%m-%d")
+def filter_by_time(crime_df, start_time):
     crime_df['ReportedDateAndTime'] = pd.to_datetime(crime_df['ReportedDateAndTime'], format="%Y-%m-%d").dt.strftime("%Y-%m-%d")
-    return crime_df.loc[crime_df['ReportedDateAndTime'] > one_year_ago]
+    return crime_df.loc[crime_df['ReportedDateAndTime'] > start_time]
 
 
 def create_crime_association(crime_df, listing_df, config: Config, request):
@@ -36,6 +35,10 @@ def _create_geocrime_row(listing_row, crime_df, config: Config, request):
         'violent': 0,
         'stolen_goods': 0
     }
+
+    if request['district'] == "toronto":
+        one_year_ago = (date.today() - timedelta(weeks=52)).strftime("%Y-%m-%d")
+        near_crimes_geodf = filter_by_time(near_crimes_geodf, one_year_ago)
 
     for crime_type in near_crimes_geodf['CrimeType'].tolist():
         if crime_type in COUNTED_CRIMES:

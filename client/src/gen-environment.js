@@ -9,7 +9,7 @@ function buildProdEnvObject() {
     production: true,
     mapbox_key: process.env.MAPBOX_KEY || "",
     base_url: "http://crib-dev-2.eba-fk2xzjmn.us-west-2.elasticbeanstalk.com",
-    crime_data_base_url: "http://crime-etl-dev2.eba-2eude4sp.us-west-2.elasticbeanstalk.com",
+    crime_data_base_url: "http://crimeetl2-env.eba-2eude4sp.us-west-2.elasticbeanstalk.com/",
     business_data_base_url: "http://business-etl.eba-kxrirbab.us-west-2.elasticbeanstalk.com"
   }
   return environment

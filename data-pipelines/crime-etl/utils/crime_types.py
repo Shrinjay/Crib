@@ -37,6 +37,24 @@ class Crime(Enum):
     GRAFFITI = "Graffiti"
     BYLAW = "Bylaw Violation"
 
+
+DROPPED_CRIMES = [
+    Crime.INTOXICATED.value,
+    Crime.SEX_OFFENCE.value,
+    Crime.INTERNET_CRIME.value,
+    Crime.BYLAW.value,
+    Crime.SUSPICIOUS.value,
+    Crime.IMPAIRED_DRIVER.value,
+    Crime.VEHICLE_COLLISION.value,
+    Crime.LIQUOR_OFFENCE.value,
+    Crime.EXTORTION.value,
+    Crime.INDECENT_ACT.value,
+    Crime.ANIMAL_COMPLAINT.value,
+    Crime.DOMESTIC_DISPUTE.value,
+    Crime.DISPUTE.value,
+    Crime.GRAFFITI.value
+]
+
 COUNTED_CRIMES = {
     Crime.HOMICIDE.value, Crime.SEX_OFFENCE.value, Crime.ASSAULT.value, Crime.WEAPON.value,
     Crime.THREATENING.value, Crime.HARASSMENT.value, Crime.ROBBERY.value, Crime.BREAK_ENTER.value, Crime.THEFT.value,

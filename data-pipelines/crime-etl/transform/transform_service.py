@@ -6,6 +6,10 @@ from datetime import date, timedelta
 from utils.config import Config
 
 
+def filter_by_crime_type(crime_df, filter_types):
+    return crime_df[~crime_df['CrimeType'].isin(filter_types)]
+
+
 def filter_by_time(crime_df, start_time):
     crime_df['ReportedDateAndTime'] = pd.to_datetime(crime_df['ReportedDateAndTime'], format="%Y-%m-%d").dt.strftime("%Y-%m-%d")
     return crime_df.loc[crime_df['ReportedDateAndTime'] > start_time]

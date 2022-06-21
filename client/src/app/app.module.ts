@@ -24,6 +24,7 @@ import { SearchComponent } from './components/search/search.component';
 import { CityBlockComponent } from './components/search/city-block/city-block.component';
 import { BusinessCardComponent } from './components/crime-overview/business-card/business-card.component';
 import { AbsPipe } from './pipes/abs.pipe';
+import { ListingResolverComponent } from './components/listing-resolver/listing-resolver/listing-resolver.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { AbsPipe } from './pipes/abs.pipe';
     SearchComponent,
     CityBlockComponent,
     BusinessCardComponent,
-    AbsPipe
+    AbsPipe,
+    ListingResolverComponent
   ],
   imports: [
     BrowserModule,

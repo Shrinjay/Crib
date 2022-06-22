@@ -8,10 +8,10 @@ import { Datasets } from 'src/app/types/api_types';
   templateUrl: './datasets.component.html',
   styleUrls: ['./datasets.component.css']
 })
-export class DatasetsComponent {
+export class DatasetsComponent implements OnInit {
 
   options: Datasets[] = []
-  selectedData: Datasets | null = null;
+  selectedData: Datasets | null = Datasets.crime;
 
   constructor(private stateService: StateService) {
     stateService.SelectedListing.subscribe(listing => {
@@ -22,6 +22,10 @@ export class DatasetsComponent {
 
       this.options = options;
     })
+  }
+
+  ngOnInit(): void {
+    this.stateService.SelectedData.next(Datasets.crime)
   }
 
 

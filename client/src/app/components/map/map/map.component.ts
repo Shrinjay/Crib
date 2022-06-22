@@ -113,6 +113,10 @@ export class MapComponent implements OnInit {
         this.crime_data = data;
         this.binnedCrimeData = this.transformer.binDataByType(data, "CrimeType")
         this.crimeTypes = Object.keys(this.binnedCrimeData)
+
+        this.geometry = this.crime_data;
+        this.binnedGeometry = this.binnedCrimeData;
+        this.options = this.crimeTypes;
       })
   }
 

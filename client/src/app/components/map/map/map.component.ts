@@ -137,6 +137,15 @@ export class MapComponent implements OnInit {
   }
 
   onSelectCategory(option: string) {
+    switch (this.selectedData) {
+      case Datasets.business:
+        this.binnedGeometry = this.binnedBusinessData;
+        break;
+      case Datasets.crime:
+        this.binnedGeometry = this.binnedCrimeData;
+        break;
+    }
+
     if (option === "Clear filter") {
       this.selectedOption = null;
       if (this.selectedData === Datasets.business) {
@@ -151,14 +160,19 @@ export class MapComponent implements OnInit {
   }
 
   onSelectTimePeriod(option: string) {
-    this.selectedTimePeriod = <TimePeriod>option;
+    this.selectedTimePeriod = <TimePeriod> option;
     this.filterTimePeriod();
     this.onSelectCategory(this.selectedOption ?? "Clear filter");
   }
 
   filterTimePeriod() {
     this.crimeData = Object.assign({}, this.allTimeCrimeData);
-    this.binnedCrimeData = Object.assign({}, this.allTimeBinnedCrimeData);
+    this.binnedCrimeData = {}
+    for (const [type, features] of Object.entries(this.allTimeBinnedCrimeData)) {
+      this.binnedCrimeData[type] = Object.assign({}, features)
+    }
+
+    Object.assign({}, this.allTimeBinnedCrimeData);
     switch (this.selectedTimePeriod) {
       case TimePeriod.allTime:
         break;
@@ -179,7 +193,7 @@ export class MapComponent implements OnInit {
       return this.isFeatureLater(thresholdDate, feature);
     });
 
-    for (let [type, featureCollection] of Object.entries(this.binnedCrimeData)) {
+    for (const [type, featureCollection] of Object.entries(this.binnedCrimeData)) {
       featureCollection.features = featureCollection.features.filter(feature => {
         return this.isFeatureLater(thresholdDate, feature);
       });

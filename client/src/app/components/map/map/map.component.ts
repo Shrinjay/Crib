@@ -16,6 +16,12 @@ export class MapComponent implements OnInit {
   @Input() center: LngLatLike | undefined;
   @Input() showDatasets: boolean = false;
 
+  layerOptions: string[] = [
+    "Heatmap",
+    "Points"
+  ]
+  selectedLayer: string = "Heatmap"
+
   centerGeoJson: any = null;
 
   showFilter: boolean = false;
@@ -135,6 +141,10 @@ export class MapComponent implements OnInit {
       this.geometry = this.binnedGeometry[option]
       this.selectedOption = option;
     }
+  }
+
+  onSelectViz(option: string) {
+    this.selectedLayer = option;
   }
 
 }

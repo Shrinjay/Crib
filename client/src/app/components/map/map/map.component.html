@@ -15,6 +15,16 @@
                 </li>
             </ul>
         </div>
+        <div class="crib-dropdown" *ngIf="!!selectedData" ngbDropdown>
+            <button class="btn btn-outline-primary" style="padding: 0.8rem;" id="dropdownBasic1" ngbDropdownToggle>
+                <span>{{selectedLayer}}</span>
+            </button>
+            <ul ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                <li *ngFor="let option of layerOptions" ngbDropdownItem [id]="option" (click)="onSelectViz(option)">
+                    {{option}}
+                </li>
+            </ul>
+        </div>
     </div>
     <div class="row">
         <mgl-map stlye="height: 100%; width: 100vw" [style]="'mapbox://styles/mapbox/streets-v11'" [zoom]="[15]" [center]="center">
@@ -24,9 +34,16 @@
             </mgl-marker>
             <mgl-geojson-source id="oneline" [data]="geometry">
             </mgl-geojson-source>
-            <mgl-layer #points id="points" type="symbol" source="oneline" [layout]="{
+            <mgl-layer #points *ngIf="selectedLayer === 'Points'" id="points" type="symbol" source="oneline" [layout]="{
                   'icon-image': 'marker'
-                  }" (layerClick)="onClick($event)">
+                  }" (layerClick)="onClick($event)"></mgl-layer>
+            <mgl-layer #points id="points" type="heatmap" source="oneline" *ngIf="selectedLayer === 'Heatmap'"
+            [paint]="{
+            'heatmap-radius': 120,
+            'heatmap-intensity': 0.04,
+            'heatmap-opacity': 0.8
+            }"
+            >
             </mgl-layer>
             <app-map-popup *ngIf="selectedPoint && selectedData" [point]="selectedPoint" [dataset]="selectedData"></app-map-popup>
         </mgl-map>

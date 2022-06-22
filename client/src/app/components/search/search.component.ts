@@ -38,6 +38,8 @@ export class SearchComponent implements OnInit {
   listings: {[id: string]: Listing} = {}
   listingArray: ListingId[] = []
 
+  showGo: boolean = false;
+
 
   constructor(private api: ApiService, private state: StateService) { 
     this.api.getListings().subscribe(listings => {
@@ -97,9 +99,9 @@ export class SearchComponent implements OnInit {
         lattitude: place.geometry.location.lat(),
         longitude: place.geometry.location.lng()
       }
+      this.showGo = true;
     }
   }
-
 
   onButtonClick() {
     this.loading = true;

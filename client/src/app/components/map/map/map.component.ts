@@ -117,6 +117,8 @@ export class MapComponent implements OnInit {
         this.geometry = this.crime_data;
         this.binnedGeometry = this.binnedCrimeData;
         this.options = this.crimeTypes;
+
+        if (!this.options.includes("Clear filter")) this.options.unshift("Clear filter")
       })
   }
 

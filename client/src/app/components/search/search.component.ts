@@ -112,6 +112,7 @@ export class SearchComponent implements OnInit {
       } else {
         if (this.request.name === "") {
           alert('That address is inavlid, try clicking on one of the suggestions!')
+          this.loading = false;
           return;
         }
         if (this.request.district === "waterloo") {

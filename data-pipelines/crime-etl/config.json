@@ -10,9 +10,9 @@
       "population_density": 20000
     },
     "waterloo": {
-      "violent_rate": 250,
+      "violent_rate": 300,
       "stolen_goods_rate": 2030,
-      "population_density": 6000
+      "population_density": 7000
     }
   }
 }

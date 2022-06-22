@@ -105,12 +105,15 @@ export class SearchComponent implements OnInit {
 
   onButtonClick() {
     this.loading = true;
-
     const selectedListing = Object.values(this.listings).find(listing => listing.name === this.request.name)
       if (selectedListing) {
         this.state.SelectedListing.next(selectedListing)
         this.loading = false;
       } else {
+        if (this.request.name === "") {
+          alert('That address is inavlid, try clicking on one of the suggestions!')
+          return;
+        }
         if (this.request.district === "waterloo") {
           this.api.generateCrimeMetrics(this.request)
           .pipe(

@@ -93,6 +93,7 @@ export class SearchComponent implements OnInit {
 
   invokeEvent(place: google.maps.places.PlaceResult) {
     if (place.geometry && place.geometry.location) {
+      this.showGo = true;
       this.request = {
         ...this.request,
         name: place.name,
@@ -178,5 +179,7 @@ export class SearchComponent implements OnInit {
     console.log(selectedListing)
     this.state.SelectedListing.next(selectedListing)
   }
+  
+  onKeyDown() {this.showGo = false;}
 
 }

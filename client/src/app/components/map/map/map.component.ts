@@ -6,6 +6,7 @@ import { StateService } from 'src/app/services/state/state.service';
 import { Datasets, TimePeriod } from 'src/app/types/api_types';
 import { BinnedFeatures, Features } from 'src/app/types/crime_overview_types';
 import { ApiService } from '../../../api.service';
+import { DateTime } from 'luxon';
 
 @Component({
   selector: 'app-map',
@@ -15,6 +16,8 @@ import { ApiService } from '../../../api.service';
 export class MapComponent implements OnInit {
   @Input() center: LngLatLike | undefined;
   @Input() showDatasets: boolean = false;
+
+  ONTARIO_TIMEZONE = 'America/Toronto'
 
   Datasets = Datasets;
 
@@ -115,7 +118,7 @@ export class MapComponent implements OnInit {
       .subscribe(data => {
         this.allTimeCrimeData = data;
         this.allTimeBinnedCrimeData = this.transformer.binDataByType(data, "CrimeType")
-        this.crimeTypes = Object.keys(this.binnedCrimeData)
+        this.crimeTypes = Object.keys(this.allTimeBinnedCrimeData)
         this.filterTimePeriod();
       })
   }
@@ -154,39 +157,55 @@ export class MapComponent implements OnInit {
   }
 
   filterTimePeriod() {
-    this.crimeData = this.allTimeCrimeData;
-    this.binnedCrimeData = this.allTimeBinnedCrimeData;
+    this.crimeData = Object.assign({}, this.allTimeCrimeData);
+    this.binnedCrimeData = Object.assign({}, this.allTimeBinnedCrimeData);
     switch (this.selectedTimePeriod) {
       case TimePeriod.allTime:
         break;
       case TimePeriod.pastYear:
-        var oneYearFromNow = new Date();
-        oneYearFromNow.setFullYear(oneYearFromNow.getFullYear() - 1);
-        this.filterByDate(oneYearFromNow);
+        this.filterByDate(DateTime.now().plus({ years: -1 }));
         break;
       case TimePeriod.pastSixMonths:
-        var sixMonthsFromNow = new Date();
-        sixMonthsFromNow.setMonth(sixMonthsFromNow.getMonth() - 6);
-        this.filterByDate(sixMonthsFromNow);
+        this.filterByDate(DateTime.now().plus({ months: -6 }));
         break;
       case TimePeriod.pastMonth:
-        var oneMonthFromNow = new Date();
-        oneMonthFromNow.setMonth(oneMonthFromNow.getMonth() - 1);
-        this.filterByDate(oneMonthFromNow);
+        this.filterByDate(DateTime.now().plus({ months: -1 }));
         break;
     }
   }
 
-  filterByDate(date: Date) {
+  filterByDate(thresholdDate: DateTime) {
     this.crimeData.features = this.crimeData.features.filter(feature => {
-      return feature.properties?.['ReportedDateAndTime'] >= date;
+      return this.isFeatureLater(thresholdDate, feature);
     });
 
     for (let [type, featureCollection] of Object.entries(this.binnedCrimeData)) {
       featureCollection.features = featureCollection.features.filter(feature => {
-        return feature.properties?.['ReportedDateAndTime'] >= date;
+        return this.isFeatureLater(thresholdDate, feature);
       });
       this.binnedCrimeData[type] = featureCollection;
     }
+  }
+
+  isFeatureLater(thresholdDate: DateTime, feature: Feature): boolean {
+    // Timezone for crimes is hardcoded as Ontario until we expand
+    // Format is different rn for Toronto and Waterloo
+    const waterlooFeatureDate = DateTime.fromFormat(feature.properties?.['ReportedDateAndTime'],
+                                                    "d/M/yyyy H:mm",
+                                                    { zone: this.ONTARIO_TIMEZONE });
+
+    if (waterlooFeatureDate.isValid) {
+      return waterlooFeatureDate >= thresholdDate;
+    }
+
+    const torontoFeatureDate = DateTime.fromFormat(feature.properties?.['ReportedDateAndTime'],
+      "yyyy-MM-dd",
+      { zone: this.ONTARIO_TIMEZONE });
+
+    if (torontoFeatureDate.isValid) {
+      return torontoFeatureDate >= thresholdDate;
+    }
+
+    return true;
   }
 }

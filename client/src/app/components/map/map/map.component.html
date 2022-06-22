@@ -15,10 +15,10 @@
         </li>
       </ul>
     </div>
-    <div class="crib-dropdown" *ngIf="!!selectedOption && selectedData == Datasets.crime" ngbDropdown>
+    <div class="crib-dropdown" *ngIf="!!selectedData && selectedData == Datasets.crime" ngbDropdown>
       <button class="btn btn-outline-primary" [ngClass]="{'pulse-button': !selectedTimePeriod}" style="padding: 0.8rem;" id="time_period_dropdown" ngbDropdownToggle>
-        <span *ngIf="selectedOption">{{selectedTimePeriod}}</span>
-        <span *ngIf="!selectedOption">Filter by Time Period</span>
+        <span *ngIf="selectedTimePeriod">{{selectedTimePeriod}}</span>
+        <span *ngIf="!selectedTimePeriod">Filter by Time Period</span>
       </button>
       <ul ngbDropdownMenu aria-labelledby="time_period_dropdown">
         <li *ngFor="let option of timePeriodOptions" ngbDropdownItem [id]="option" (click)="onSelectTimePeriod(option)">

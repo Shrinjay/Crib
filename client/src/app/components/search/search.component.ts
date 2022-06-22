@@ -99,7 +99,6 @@ export class SearchComponent implements OnInit {
         lattitude: place.geometry.location.lat(),
         longitude: place.geometry.location.lng()
       }
-      this.showGo = true;
     }
   }
 

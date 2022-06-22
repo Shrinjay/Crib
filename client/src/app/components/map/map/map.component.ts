@@ -48,6 +48,8 @@ export class MapComponent implements OnInit {
   options: string[] = []
   timePeriodOptions: string[] = Object.values(TimePeriod)
 
+  city: string | undefined = undefined
+
   constructor(private api: ApiService, private stateService: StateService, private transformer: CrimeTransformService) {
     this.centerGeoJson = {
       type: 'geojson',
@@ -204,22 +206,39 @@ export class MapComponent implements OnInit {
   isFeatureLater(thresholdDate: DateTime, feature: Feature): boolean {
     // Timezone for crimes is hardcoded as Ontario until we expand
     // Format is different rn for Toronto and Waterloo
-    const waterlooFeatureDate = DateTime.fromFormat(feature.properties?.['ReportedDateAndTime'],
-                                                    "d/M/yyyy H:mm",
-                                                    { zone: this.ONTARIO_TIMEZONE });
 
-    if (waterlooFeatureDate.isValid) {
-      return waterlooFeatureDate >= thresholdDate;
+    if (this.city === "Waterloo") {
+      return this.getDateWaterloo(feature) >= thresholdDate;
     }
-
-    const torontoFeatureDate = DateTime.fromFormat(feature.properties?.['ReportedDateAndTime'],
-      "yyyy-MM-dd",
-      { zone: this.ONTARIO_TIMEZONE });
-
-    if (torontoFeatureDate.isValid) {
-      return torontoFeatureDate >= thresholdDate;
+    else if (this.city === "Toronto") {
+      return this.getDateToronto(feature) >= thresholdDate;
     }
+    else {
+      const waterlooFeatureDate = this.getDateWaterloo(feature);
+      if (waterlooFeatureDate.isValid) {
+        this.city = "Waterloo"
+        return waterlooFeatureDate >= thresholdDate;
+      }
 
-    return true;
+      const torontoFeatureDate = this.getDateToronto(feature);
+      if (torontoFeatureDate.isValid) {
+        this.city = "Toronto"
+        return torontoFeatureDate >= thresholdDate;
+      }
+
+      return true;
+    }
+  }
+
+  getDateWaterloo(feature: Feature): DateTime {
+    return DateTime.fromFormat(feature.properties?.['ReportedDateAndTime'],
+                               "d/M/yyyy H:mm",
+                               { zone: this.ONTARIO_TIMEZONE });
+  }
+
+  getDateToronto(feature: Feature): DateTime {
+    return DateTime.fromFormat(feature.properties?.['ReportedDateAndTime'],
+                               "yyyy-MM-dd",
+                               { zone: this.ONTARIO_TIMEZONE });
   }
 }

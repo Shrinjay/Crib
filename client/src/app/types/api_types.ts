@@ -59,6 +59,13 @@ export enum Datasets {
     crime = "Crime"
 }
 
+export enum TimePeriod {
+  pastMonth = "Past Month",
+  pastSixMonths = "Past 6 Months",
+  pastYear = "Past Year",
+  allTime = "All Time"
+}
+
 export interface SurveyResponse {
     enjoyementRating: number,
     recommendationRating: number,

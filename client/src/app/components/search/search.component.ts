@@ -104,17 +104,18 @@ export class SearchComponent implements OnInit {
   }
 
   onButtonClick() {
+    if (this.request.name === "") {
+      alert('That address is inavlid, try clicking on one of the suggestions!')
+      this.loading = false;
+      return;
+    }
+
     this.loading = true;
     const selectedListing = Object.values(this.listings).find(listing => listing.name === this.request.name)
       if (selectedListing) {
         this.state.SelectedListing.next(selectedListing)
         this.loading = false;
       } else {
-        if (this.request.name === "") {
-          alert('That address is inavlid, try clicking on one of the suggestions!')
-          this.loading = false;
-          return;
-        }
         if (this.request.district === "waterloo") {
           this.api.generateCrimeMetrics(this.request)
           .pipe(
@@ -162,10 +163,7 @@ export class SearchComponent implements OnInit {
   onClick(city: string) {
     this.selected_city = city;
     this.state.SelectedCity.next(city);
-    this.request = {
-      ...this.request,
-      district: city.toLowerCase()
-    }
+    this.resetRequest();
 
     this.ngAfterViewInit();
   }
@@ -183,7 +181,18 @@ export class SearchComponent implements OnInit {
     console.log(selectedListing)
     this.state.SelectedListing.next(selectedListing)
   }
-  
-  onKeyDown() {this.showGo = false;}
 
+  onSearchChanged(event: Event) {
+    this.resetRequest();
+  }
+
+  resetRequest() {
+    this.request = {
+      name: "",
+      lattitude: 0.0,
+      longitude: 0.0,
+      district: "toronto"
+    };
+    this.showGo = false;
+  }
 }

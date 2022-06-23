@@ -61,3 +61,6 @@ import { ListingResolverComponent } from './components/listing-resolver/listing-
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+declare global {
+  interface Window { analytics: any; }
+}

@@ -24,6 +24,7 @@ export class CrimeOverviewComponent {
   showCrime: boolean = true;
 
   constructor(private api: ApiService, private stateService: StateService) {
+    window.analytics.page('Property')
     this.stateService.SelectedListing.subscribe(listing => {
       this.getCrimeData(listing.crime_geodata_id);
       this.getBusinessData(listing.business_geodata_id)

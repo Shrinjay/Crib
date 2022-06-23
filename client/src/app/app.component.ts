@@ -30,6 +30,7 @@ export class AppComponent {
   }
 
   ngOnInit(): void {
+    window.analytics.page('Landing')
     this.getIpService.getIpAddress().subscribe(response =>
       this.api.incrementSourceCount(response.ip, this.stateService.getSource()).subscribe(response => {
         if (response.number_of_visits == 2) {

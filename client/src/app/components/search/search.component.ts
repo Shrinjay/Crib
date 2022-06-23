@@ -110,6 +110,13 @@ export class SearchComponent implements OnInit {
       return;
     }
 
+    if (this.loading) {
+      alert("Slow down there! One request at a time please.")
+      return;
+    }
+    this.loading = true;
+    window.analytics.track("Start loading")
+
     this.loading = true;
     const selectedListing = Object.values(this.listings).find(listing => listing.name === this.request.name)
       if (selectedListing) {
@@ -120,6 +127,7 @@ export class SearchComponent implements OnInit {
           this.api.generateCrimeMetrics(this.request)
           .pipe(
             catchError(_ => {
+              window.analytics.track("Failed loading")
               alert("Sorry, we couldn't process your request! Please try again.");
               this.loading = false;
               return of(false)
@@ -132,6 +140,7 @@ export class SearchComponent implements OnInit {
                 if (listings) {
                   const selectedListing = Object.values(listings).find(listing => listing.name === this.request.name) as Listing
                   this.state.SelectedListing.next(selectedListing)
+                  window.analytics.track("Succesful loading")
                   this.loading = false;
                 }
               })
@@ -143,6 +152,7 @@ export class SearchComponent implements OnInit {
           .pipe(
             catchError(_ => {
               alert("Sorry, we couldn't process your request! Please try again.");
+              window.analytics.track("Failed loading")
               this.loading = false;
               return of(false)
             })
@@ -152,6 +162,7 @@ export class SearchComponent implements OnInit {
             this.api.getListings().subscribe(listings => {
               const selectedListing = Object.values(listings).find(listing => listing.name === this.request.name) as Listing
               this.state.SelectedListing.next(selectedListing)
+              window.analytics.track("Failed loading")
               this.loading = false;
             })
           }
@@ -180,6 +191,7 @@ export class SearchComponent implements OnInit {
     const selectedListing = this.listings[id]
     console.log(selectedListing)
     this.state.SelectedListing.next(selectedListing)
+    window.analytics.track("Load recent search")
   }
 
   onSearchChanged(event: Event) {

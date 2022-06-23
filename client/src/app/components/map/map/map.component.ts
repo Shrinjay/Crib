@@ -207,26 +207,42 @@ export class MapComponent implements OnInit {
     // Timezone for crimes is hardcoded as Ontario until we expand
     // Format is different rn for Toronto and Waterloo
 
-    if (this.city === "Waterloo") {
-      return this.getDateWaterloo(feature) >= thresholdDate;
+    if (!feature.properties) {
+      return false;
     }
-    else if (this.city === "Toronto") {
-      return this.getDateToronto(feature) >= thresholdDate;
+
+    if ('DateTime' in feature.properties!) {
+      return DateTime.fromMillis(feature.properties['DateTime']) >= thresholdDate;
     }
+
     else {
-      const waterlooFeatureDate = this.getDateWaterloo(feature);
-      if (waterlooFeatureDate.isValid) {
-        this.city = "Waterloo"
-        return waterlooFeatureDate >= thresholdDate;
+      if (this.city === "Waterloo") {
+        const featureDate = this.getDateWaterloo(feature);
+        feature.properties!['DateTime'] = featureDate.toMillis();
+        return featureDate >= thresholdDate;
       }
-
-      const torontoFeatureDate = this.getDateToronto(feature);
-      if (torontoFeatureDate.isValid) {
-        this.city = "Toronto"
-        return torontoFeatureDate >= thresholdDate;
+      else if (this.city === "Toronto") {
+        const featureDate = this.getDateToronto(feature);
+        feature.properties!['DateTime'] = featureDate.toMillis();
+        return featureDate >= thresholdDate;
       }
+      else {
+        const waterlooFeatureDate = this.getDateWaterloo(feature);
+        if (waterlooFeatureDate.isValid) {
+          this.city = "Waterloo"
+          feature.properties!['DateTime'] = waterlooFeatureDate.toMillis();
+          return waterlooFeatureDate >= thresholdDate;
+        }
 
-      return true;
+        const torontoFeatureDate = this.getDateToronto(feature);
+        if (torontoFeatureDate.isValid) {
+          this.city = "Toronto"
+          feature.properties!['DateTime'] = torontoFeatureDate.toMillis();
+          return torontoFeatureDate >= thresholdDate;
+        }
+
+        return true;
+      }
     }
   }
 

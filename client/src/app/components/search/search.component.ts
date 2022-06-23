@@ -38,6 +38,8 @@ export class SearchComponent implements OnInit {
   listings: {[id: string]: Listing} = {}
   listingArray: ListingId[] = []
 
+  showGo: boolean = false;
+
 
   constructor(private api: ApiService, private state: StateService) { 
     this.api.getListings().subscribe(listings => {
@@ -91,6 +93,7 @@ export class SearchComponent implements OnInit {
 
   invokeEvent(place: google.maps.places.PlaceResult) {
     if (place.geometry && place.geometry.location) {
+      this.showGo = true;
       this.request = {
         ...this.request,
         name: place.name,
@@ -100,10 +103,14 @@ export class SearchComponent implements OnInit {
     }
   }
 
-
   onButtonClick() {
-    this.loading = true;
+    if (this.request.name === "") {
+      alert('That address is inavlid, try clicking on one of the suggestions!')
+      this.loading = false;
+      return;
+    }
 
+    this.loading = true;
     const selectedListing = Object.values(this.listings).find(listing => listing.name === this.request.name)
       if (selectedListing) {
         this.state.SelectedListing.next(selectedListing)
@@ -156,10 +163,7 @@ export class SearchComponent implements OnInit {
   onClick(city: string) {
     this.selected_city = city;
     this.state.SelectedCity.next(city);
-    this.request = {
-      ...this.request,
-      district: city.toLowerCase()
-    }
+    this.resetRequest();
 
     this.ngAfterViewInit();
   }
@@ -178,4 +182,17 @@ export class SearchComponent implements OnInit {
     this.state.SelectedListing.next(selectedListing)
   }
 
+  onSearchChanged(event: Event) {
+    this.resetRequest();
+  }
+
+  resetRequest() {
+    this.request = {
+      name: "",
+      lattitude: 0.0,
+      longitude: 0.0,
+      district: "toronto"
+    };
+    this.showGo = false;
+  }
 }

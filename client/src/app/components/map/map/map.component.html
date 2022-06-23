@@ -26,6 +26,16 @@
         </li>
       </ul>
     </div>
+    <div class="crib-dropdown" *ngIf="!!selectedData" ngbDropdown>
+            <button class="btn btn-outline-primary" style="padding: 0.8rem;" id="dropdownBasic1" ngbDropdownToggle>
+                <span>{{selectedLayer}}</span>
+            </button>
+            <ul ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                <li *ngFor="let option of layerOptions" ngbDropdownItem [id]="option" (click)="onSelectViz(option)">
+                    {{option}}
+                </li>
+            </ul>
+        </div>
   </div>
   <div class="row">
     <mgl-map stlye="height: 100%; width: 100vw" [style]="'mapbox://styles/mapbox/streets-v11'" [zoom]="[15]" [center]="center">

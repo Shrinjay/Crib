@@ -54,6 +54,7 @@ export class MapComponent implements OnInit {
   timePeriodOptions: string[] = Object.values(TimePeriod)
 
   city: string | undefined = undefined
+  stateCity: string | undefined = undefined;
 
   constructor(private api: ApiService, private stateService: StateService, private transformer: CrimeTransformService) {
     this.centerGeoJson = {
@@ -78,6 +79,8 @@ export class MapComponent implements OnInit {
       if (listing.crime_geodata_id !== "") this.getCrimeData(listing.crime_geodata_id);
       if (listing.business_geodata_id !== "") this.getBusinessData(listing.business_geodata_id)
     });
+
+    this.stateService.SelectedCity.subscribe(city => this.stateCity = city)
 
     this.stateService.SelectedData.subscribe(dataset => {
       this.selectedData = dataset

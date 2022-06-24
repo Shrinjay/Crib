@@ -44,7 +44,15 @@ export class SearchComponent implements OnInit {
   constructor(private api: ApiService, private state: StateService) { 
     this.api.getListings().subscribe(listings => {
       this.listings = listings
-      this.listingArray = Object.entries(listings).map(([id, listing]) => ({id, ...listing}))
+      const filteredListings: ListingId[] = []
+      const addedNames = new Set()
+      const unfilteredListingArray = Object.entries(listings).map(([id, listing]) => ({id, ...listing}))
+      unfilteredListingArray.forEach(listing => {
+        if (addedNames.has(listing.name)) return;
+        filteredListings.push(listing);
+        addedNames.add(listing.name)
+      })
+      this.listingArray = filteredListings;
     })
   }
 

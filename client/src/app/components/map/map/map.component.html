@@ -15,7 +15,7 @@
         </li>
       </ul>
     </div>
-    <div class="crib-dropdown" *ngIf="!!selectedData && selectedData == Datasets.crime && city === 'Toronto'" ngbDropdown>
+    <div class="crib-dropdown" *ngIf="!!selectedData && selectedData == Datasets.crime" ngbDropdown>
       <button class="btn btn-outline-primary" [ngClass]="{'pulse-button': !selectedTimePeriod}" style="padding: 0.8rem;" id="time_period_dropdown" ngbDropdownToggle>
         <span *ngIf="selectedTimePeriod">{{selectedTimePeriod}}</span>
         <span *ngIf="!selectedTimePeriod">Filter by Time Period</span>
@@ -52,17 +52,9 @@
       'heatmap-opacity': 0.8
       }"
       ></mgl-layer>
-      <mgl-layer #points id="points" type="symbol" source="oneline" *ngIf="selectedLayer === 'Points'" [layout]="{
       <mgl-layer #points *ngIf="selectedLayer === 'Points'" id="points" type="symbol" source="oneline" [layout]="{
                   'icon-image': 'marker'
                   }" (layerClick)="onClick($event)"></mgl-layer>
-      <mgl-layer #points id="points" type="heatmap" source="oneline" *ngIf="selectedLayer === 'Heatmap'"
-                 [paint]="{
-            'heatmap-radius': 120,
-            'heatmap-intensity': 0.04,
-            'heatmap-opacity': 0.8
-            }">
-      </mgl-layer>
       <app-map-popup *ngIf="selectedPoint && selectedData" [point]="selectedPoint" [dataset]="selectedData"></app-map-popup>
     </mgl-map>
   </div>

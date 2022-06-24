@@ -136,6 +136,10 @@ export class MapComponent implements OnInit {
         this.allTimeBinnedCrimeData = this.transformer.binDataByType(data, "CrimeType")
         this.crimeTypes = Object.keys(this.allTimeBinnedCrimeData)
         this.filterTimePeriod();
+        this.geometry = this.crimeData;
+        this.binnedGeometry = this.binnedCrimeData;
+        this.options = this.crimeTypes;
+        if (!this.options.includes("Clear filter")) this.options.unshift("Clear filter");
       })
   }
 

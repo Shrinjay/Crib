@@ -53,8 +53,15 @@
       }"
       ></mgl-layer>
       <mgl-layer #points id="points" type="symbol" source="oneline" *ngIf="selectedLayer === 'Points'" [layout]="{
+      <mgl-layer #points *ngIf="selectedLayer === 'Points'" id="points" type="symbol" source="oneline" [layout]="{
                   'icon-image': 'marker'
-                  }" (layerClick)="onClick($event)">
+                  }" (layerClick)="onClick($event)"></mgl-layer>
+      <mgl-layer #points id="points" type="heatmap" source="oneline" *ngIf="selectedLayer === 'Heatmap'"
+                 [paint]="{
+            'heatmap-radius': 120,
+            'heatmap-intensity': 0.04,
+            'heatmap-opacity': 0.8
+            }">
       </mgl-layer>
       <app-map-popup *ngIf="selectedPoint && selectedData" [point]="selectedPoint" [dataset]="selectedData"></app-map-popup>
     </mgl-map>

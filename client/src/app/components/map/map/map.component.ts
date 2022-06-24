@@ -126,15 +126,6 @@ export class MapComponent implements OnInit {
   getCrimeData(id: string) {
     this.api.getCrimeGeoData(id)
       .subscribe(data => {
-        this.crimeData = data;
-        this.binnedCrimeData = this.transformer.binDataByType(data, "CrimeType")
-        this.crimeTypes = Object.keys(this.binnedCrimeData)
-
-        this.geometry = this.crimeData;
-        this.binnedGeometry = this.binnedCrimeData;
-        this.options = this.crimeTypes;
-
-        if (!this.options.includes("Clear filter")) this.options.unshift("Clear filter")
         this.allTimeCrimeData = data;
         this.allTimeBinnedCrimeData = this.transformer.binDataByType(data, "CrimeType")
         this.crimeTypes = Object.keys(this.allTimeBinnedCrimeData)

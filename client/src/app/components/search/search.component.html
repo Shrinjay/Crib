@@ -27,10 +27,15 @@
                     <span class="sr-only">Loading...</span>
                 </div>
             </div>
-            <h2>Recent Searches</h2>
-            <ul>
+            <h2>Popular Properties</h2>
+            <table>
+                <tr *ngFor="let listingRow of listingRows">
+                    <td style="width:60vw" *ngFor="let listing of listingRow"><a href="#" (click)="onLinkClick(listing.id)">{{listing.name}}</a></td>
+                </tr>
+            </table>
+            <!-- <ul style="list-style-type:none;">
                 <li *ngFor="let listing of listingArray"><a href="#" (click)="onLinkClick(listing.id)">{{listing.name}}</a></li>
-            </ul>
+            </ul> -->
         </div>
     </div>
 

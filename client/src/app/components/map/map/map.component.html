@@ -15,7 +15,7 @@
         </li>
       </ul>
     </div>
-    <div class="crib-dropdown" *ngIf="!!selectedData && selectedData == Datasets.crime" ngbDropdown>
+    <div class="crib-dropdown" *ngIf="!!selectedData && selectedData == Datasets.crime && selectedCity === 'Toronto'" ngbDropdown>
       <button class="btn btn-outline-primary" [ngClass]="{'pulse-button': !selectedTimePeriod}" style="padding: 0.8rem;" id="time_period_dropdown" ngbDropdownToggle>
         <span *ngIf="selectedTimePeriod">{{selectedTimePeriod}}</span>
         <span *ngIf="!selectedTimePeriod">Filter by Time Period</span>

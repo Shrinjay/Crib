@@ -8,9 +8,9 @@ function buildProdEnvObject() {
   let environment = {
     production: true,
     mapbox_key: process.env.MAPBOX_KEY || "",
-    base_url: "http://cribapi-prod.eba-fk2xzjmn.us-west-2.elasticbeanstalk.com",
-    crime_data_base_url: "http://crimeetl2-prod.eba-2eude4sp.us-west-2.elasticbeanstalk.com",
-    business_data_base_url: "http://businessetl-prod.eba-kxrirbab.us-west-2.elasticbeanstalk.com"
+    base_url: "https://backend.cribanalytics.com",
+    crime_data_base_url: "https://crime.cribanalytics.com",
+    business_data_base_url: "https://business.cribanalytics.com"
   }
   return environment
 }

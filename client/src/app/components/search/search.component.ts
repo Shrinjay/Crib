@@ -1,5 +1,5 @@
 /// <reference types="@types/googlemaps" />
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { catchError, forkJoin, of } from 'rxjs';
 import { ApiService } from 'src/app/api.service';
 import { StateService } from 'src/app/services/state/state.service';
@@ -36,7 +36,8 @@ export class SearchComponent implements OnInit {
 
   loading: boolean = false;
   listings: {[id: string]: Listing} = {}
-  listingArray: ListingId[] = []
+  listingRows: ListingId[][] = [[]]
+  numOfRows: number = 6;
 
   showGo: boolean = false;
 
@@ -52,12 +53,38 @@ export class SearchComponent implements OnInit {
         filteredListings.push(listing);
         addedNames.add(listing.name)
       })
-      this.listingArray = filteredListings;
+
+      filteredListings.slice(0, 30).forEach((listing, index) => {
+        const i = Math.floor(index % this.numOfRows)
+
+        if (i >= this.listingRows.length) {
+          this.listingRows.push([])
+        }
+        this.listingRows[i].push(listing)
+      })
+      console.log(this.listingRows)
     })
   }
 
   ngOnInit(): void {
-    
+    const innerWidth = window.innerWidth;
+    this.setNumRows(innerWidth);
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    const innerWidth = window.innerWidth;
+    this.setNumRows(innerWidth);
+  }
+
+  setNumRows(innerWidth: number) {
+    if (innerWidth < 768) {
+      this.numOfRows = 15
+    } else if (innerWidth < 992) {
+      this.numOfRows = 12;
+    } else {
+      this.numOfRows = 6;
+    }
   }
 
   ngAfterViewInit(): void {

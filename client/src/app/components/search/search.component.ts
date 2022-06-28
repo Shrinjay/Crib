@@ -207,12 +207,12 @@ export class SearchComponent implements OnInit {
   }
 
   onClick(city: string) {
+    const previous = this.selected_city;
     this.selected_city = city;
     this.state.SelectedCity.next(city);
-    this.resetRequest();
-    if (city === "Toronto") this.request.district = "toronto"
-    else if (city === "Waterloo") this.request.district = "waterloo"
-
+    if (previous !== city) {
+      this.resetRequest();
+    }
     this.ngAfterViewInit();
   }
 
@@ -237,10 +237,10 @@ export class SearchComponent implements OnInit {
 
   resetRequest() {
     this.request = {
+      ...this.request,
       name: "",
       lattitude: 0.0,
-      longitude: 0.0,
-      district: "toronto"
+      longitude: 0.0
     };
     this.showGo = false;
   }

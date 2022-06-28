@@ -213,6 +213,8 @@ export class SearchComponent implements OnInit {
     if (previous !== city) {
       this.resetRequest();
     }
+    if (city === "Toronto") this.request.district = "toronto"
+    else if (city === "Waterloo") this.request.district = "waterloo"
     this.ngAfterViewInit();
   }
 

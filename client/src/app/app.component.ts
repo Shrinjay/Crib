@@ -33,7 +33,7 @@ export class AppComponent {
     window.analytics.page('Landing')
     this.getIpService.getIpAddress().subscribe(response =>
       this.api.incrementSourceCount(response.ip, this.stateService.getSource()).subscribe(response => {
-        if (response.number_of_visits == 2) {
+        if (response.number_of_visits == 2 || (response.number_of_visits % 5) == 4) {
           const dialogRef = this.dialog.open(UserSurveyComponent, {
             width: '900px',
             height: '700px'

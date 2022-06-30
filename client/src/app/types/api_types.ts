@@ -67,10 +67,7 @@ export enum TimePeriod {
 }
 
 export interface SurveyResponse {
-    enjoyementRating: number,
     recommendationRating: number,
-    maxPricePerListing: string,
-    maxPricePerMonth: string,
     willingToBeInterviewed: boolean,
     email: string
 }

@@ -158,17 +158,8 @@ export async function addUserSurveyResponse(ipAddress: string, surveyResponse: S
             "ip_address": {
                 S: ipAddress
             },
-            "enjoyement_rating": {
-                N: surveyResponse.enjoyementRating.toString()
-            },
             "recommendation_rating": {
                 N: surveyResponse.recommendationRating.toString()
-            },
-            "max_price_per_listing": {
-                S: surveyResponse.maxPricePerListing
-            },
-            "max_price_per_month": {
-                S: surveyResponse.maxPricePerMonth
             },
             "willing_to_be_interviewed": {
                 BOOL: surveyResponse.willingToBeInterviewed
@@ -180,4 +171,25 @@ export async function addUserSurveyResponse(ipAddress: string, surveyResponse: S
     }
 
     return await dbContext.putItem(params);
+}
+
+export async function doesSurveyResponseExist(ipAddress: string): Promise<boolean> {
+    const params = {
+        TableName: "user_survey_responses",
+        Key: {
+            "ip_address": {
+                S: ipAddress
+            }
+        },
+        AttributesToGet: [
+            "ip_address"
+        ]
+    };
+
+    if ((await dbContext.getItem(params)).Item) {
+        return true;
+    }
+    else {
+        return false;
+    }
 }

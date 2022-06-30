@@ -54,8 +54,8 @@ def _create_geocrime_row(listing_row, crime_df, config: Config, request):
     population = config.benchmarks[district]['population_density']
     violent_rate = (crime_counts_by_category['violent'] / population) * 100000
     stolen_goods_rate = (crime_counts_by_category['stolen_goods'] / population) * 100000
-    violent_comparison = __percent_diff(violent_rate, config.benchmarks[district]['violent_rate'])
-    stolen_goods_comparison = __percent_diff(stolen_goods_rate, config.benchmarks[district]['stolen_goods_rate'])
+    violent_comparison = __percent_diff(config.benchmarks[district]['violent_rate'], violent_rate)
+    stolen_goods_comparison = __percent_diff(config.benchmarks[district]['stolen_goods_rate'], stolen_goods_rate)
 
     total_crime_rate = violent_rate + stolen_goods_rate
     total_comparison = (config.benchmarks[district]['violent_rate'] + config.benchmarks[district]['stolen_goods_rate'])*8

@@ -216,6 +216,7 @@ export class SearchComponent implements OnInit {
     if (city === "Toronto") this.request.district = "toronto"
     else if (city === "Waterloo") this.request.district = "waterloo"
     this.ngAfterViewInit();
+    console.log(this.request)
   }
 
   onHover(city: string) {

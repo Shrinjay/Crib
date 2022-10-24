@@ -1,4 +1,4 @@
-import { addUserSurveyResponse, getListings, incrementNumberOfClicks, incrementUserVisits } from './services/dynamodb';
+import { addUserSurveyResponse, doesSurveyResponseExist, getListings, incrementNumberOfClicks, incrementUserVisits } from './services/dynamodb';
 import { getFromS3 } from './services/s3';
 import { ListingQuery } from './types/db_types';
 require('dotenv').config();
@@ -67,10 +67,19 @@ app.post('/user_analytics/sources/:source', (req: any, res: any) => {
     }
 
     const promise = Promise.all([incrementNumberOfClicks(req.params.source),
-        incrementUserVisits(req.query.ip_address, req.params.source)]);
+                                 incrementUserVisits(req.query.ip_address, req.params.source),
+                                 doesSurveyResponseExist(req.query.ip_address)]);
 
     promise
-    .then(values => res.status(200).send({ number_of_visits: Number(values[1].Attributes!.number_of_visits.N) }))
+    .then(values => {
+        const numberOfVisits = Number(values[1].Attributes!.number_of_visits.N);
+        if ((numberOfVisits == 2 || numberOfVisits % 4 == 2) && !values[2]) {
+            res.status(200).send({ showSurvey: true });
+        }
+        else {
+            res.status(200).send({ showSurvey: false });
+        }
+    })
     .catch(err => {
         console.log(err)
         res.status(400).send({ message: err?.Code })

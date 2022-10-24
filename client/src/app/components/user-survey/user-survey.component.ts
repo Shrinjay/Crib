@@ -14,10 +14,7 @@ export class UserSurveyComponent implements OnInit {
   initalNumber: number | undefined = undefined
   initialBool: boolean | undefined = undefined
   surveyForm = new FormGroup({
-    enjoyementRating: new FormControl(this.initalNumber, Validators.required),
     recommendationRating: new FormControl(this.initalNumber, Validators.required),
-    maxPricePerListing: new FormControl('', Validators.required),
-    maxPricePerMonth: new FormControl('', Validators.required),
     willingToBeInterviewed: new FormControl(this.initialBool, Validators.required),
     email: new FormControl('')
   });
@@ -42,10 +39,7 @@ export class UserSurveyComponent implements OnInit {
   submit() {
     let value = this.surveyForm.value
     var surveyResponse = {
-      enjoyementRating: value.enjoyementRating!,
       recommendationRating: value.recommendationRating!,
-      maxPricePerListing: value.maxPricePerListing!,
-      maxPricePerMonth: value.maxPricePerMonth!,
       willingToBeInterviewed: value.willingToBeInterviewed!,
       email: value.email!
     };
@@ -56,5 +50,5 @@ export class UserSurveyComponent implements OnInit {
 
     this.dialogRef.close();
   }
-    
+
 }
